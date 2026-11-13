@@ -1,0 +1,150 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SpeedtestFramework from '../components/SpeedtestFramework.astro';
+---
+
+<Layout
+  title="机场测速与晚高峰压力评测天梯榜：28家主流品牌实测数据 - 机场测评"
+  description="2026 最新主流机场测速与晚高峰真实极限压力横向测评。基于千兆光纤实测采样，全景展示 28 家机场的下载速度、网络延迟、抖动幅度与丢包率，拒绝虚假云跑分，呈现真实的晚高峰抗拥塞能力。"
+  keywords="机场测速, 机场测评, 晚高峰测速, 机场跑分, 节点延迟测试, 丢包率对比, 专线测速, 4K测速对比"
+>
+  <div class="py-10 sm:py-16">
+    <div class="max-w-[1560px] 2xl:max-w-[1680px] xl:pr-64 2xl:pr-72 mx-auto px-4 sm:px-6 lg:px-8 transition-all">
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-xs text-slate-500 mb-6">
+        <a href="/" class="hover:text-indigo-600">首页</a>
+        <span>/</span>
+        <span class="text-slate-800 dark:text-slate-200 font-medium">晚高峰测速天梯</span>
+      </nav>
+
+      <!-- Page Header -->
+      <header class="mb-8">
+        <div class="flex items-center gap-2 text-xs text-slate-400 mb-3 flex-wrap">
+          <span class="px-2.5 py-1 rounded-md bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 font-bold border border-emerald-200/80 dark:border-emerald-800/80">
+            实测数据库已核准 · 2026-11-13
+          </span>
+          <span class="px-2.5 py-1 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-bold border border-indigo-200/80 dark:border-indigo-800/80">
+            全网 28 家全量收录
+          </span>
+          <span>测试环境：电信 1000M 光纤 + Wi-Fi 6 Mesh</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+          2026 各大主流机场晚高峰（20:30-22:30）极限压力测速横向实测
+        </h1>
+
+        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 mt-4 leading-relaxed bg-slate-50 dark:bg-slate-900/60 p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800">
+          💡 <strong>测试说明：</strong>为了帮助大家选出不卡顿、晚高峰真正稳定不虚标的机场，本站测评实验室针对收录的全部 28 家主流机场节点进行了持续一周的晚高峰（20:30 - 22:30）高负载压力测试。涵盖 IPLC 物理专线、企业级 IEPL 纯内网专线与 BGP 隧道中继等全类型架构。
+        </p>
+      </header>
+
+      <!-- 晚高峰核心数据横向汇总框架 -->
+      <SpeedtestFramework />
+
+      <!-- 二、关键测试总结与各场景选购建议 -->
+      <section class="mt-14 pt-10 border-t border-slate-200 dark:border-slate-800">
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mb-6">
+          二、 晚高峰实测数据深度总结与选购建议
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950 flex items-center justify-center text-xl mb-4">
+                🤖
+              </div>
+              <h3 class="text-lg font-black text-slate-900 dark:text-white mb-2">
+                AI 生产力与外贸办公
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                强烈首推 <strong>隐形人</strong>、<strong>微风网络 Breezenet</strong> 或 <strong>宇宙云</strong>。其节点商业 IP 纯净度极高（Scam Score &lt; 5），晚高峰专线延迟极稳，完全不会触发 Cloudflare 5秒盾，完美支持 ChatGPT 4o / Claude 3.5 Sonnet / Midjourney。
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
+              <a href="/airports/invisible-cloud" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
+                查看隐形人专属架构评测 &rarr;
+              </a>
+            </div>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950 flex items-center justify-center text-xl mb-4">
+                🎬
+              </div>
+              <h3 class="text-lg font-black text-slate-900 dark:text-white mb-2">
+                影音流媒体 4K/8K 秒开
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                <strong>暮光加速</strong>、<strong>飞猫云</strong> 与 <strong>星岛梦</strong> 凭借超大流量池与高性价比，配合专属优惠码，是个人日常看 Netflix、Disney+ 与 YouTube 4K/8K 追剧的最优解，初始缓冲均低于 1 秒。
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
+              <a href="/ranking" class="text-xs font-bold text-amber-600 dark:text-amber-400 hover:underline">
+                查看主流流媒体梯队榜 &rarr;
+              </a>
+            </div>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950 flex items-center justify-center text-xl mb-4">
+                🛡️
+              </div>
+              <h3 class="text-lg font-black text-slate-900 dark:text-white mb-2">
+                平价备用与低门槛查资料
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                <strong>灵猫</strong>、<strong>光年梯</strong> 或 <strong>快狸</strong> 的个位数月付套餐可以作为备用梯子。遇到国际骨干网抖动或特殊时期，多备一家不同入口的机场可充当第二冗余通道，永不断网。
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
+              <a href="/guide" class="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline">
+                查阅选购防坑指南 &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 三、独家主推品牌隐形人 24小时晚高峰真实延迟采样图表展示 -->
+      <section class="mt-14 pt-10 border-t border-slate-200 dark:border-slate-800">
+        <div class="flex items-center justify-between mb-6 flex-wrap gap-2">
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
+              三、 本站独家主推第一品牌：隐形人 晚高峰全节点低延迟实测走势
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">
+              测试时间：2026-11-13 晚高峰 · 企业 IEPL 内网专线直连
+            </p>
+          </div>
+          <a
+            href="/airports/invisible-cloud"
+            class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-amber-500 hover:bg-amber-600 text-white shadow-sm transition-all"
+          >
+            👑 查看隐形人 60 节点矩阵与实测
+          </a>
+        </div>
+
+        <div class="rounded-3xl overflow-hidden border-2 border-indigo-200/80 dark:border-indigo-900/60 shadow-xl bg-white dark:bg-slate-900 p-2 sm:p-4">
+          <img
+            src="/images/invisible-peak-latency.svg"
+            alt="隐形人 2026-11-13 晚高峰全节点实测延迟图"
+            class="w-full h-auto rounded-2xl"
+          />
+        </div>
+      </section>
+
+      <!-- 底部快捷跳转 -->
+      <div class="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between flex-wrap gap-4">
+        <a href="/ranking" class="text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
+          &larr; 返回机场测评排行榜 (全部 28 家)
+        </a>
+        <a href="/guide" class="text-sm font-bold text-slate-700 dark:text-slate-300 hover:text-indigo-600">
+          查阅机场节点选购防坑指南 &rarr;
+        </a>
+      </div>
+
+    </div>
+  </div>
+</Layout>

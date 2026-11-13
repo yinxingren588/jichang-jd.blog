@@ -1,0 +1,331 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { faqCategories, faqData } from '../data/faqs';
+---
+
+<Layout
+  title="机场常见问题解答与节点故障排查知识库（FAQ 24题）"
+  description="系统解答节点连接与机场使用中的高频疑难杂症：包含假断网快速恢复、节点超时 Timeout 排障、ChatGPT 访问受限解决、节点倍率扣费猫腻识别与退款策略等 24 项实用知识。"
+  keywords="机场常见问题, 节点连接问题, 订阅故障排查, 假断网恢复, 节点超时解决, 科学上网FAQ, ChatGPT报错"
+>
+  <div class="py-10 sm:py-16 font-sans">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-xs text-slate-500 mb-6">
+        <a href="/" class="hover:text-indigo-600 transition-colors">首页</a>
+        <span>/</span>
+        <span class="text-slate-800 dark:text-slate-200 font-medium">常见问答 FAQ</span>
+      </nav>
+
+      <!-- Page Hero Header -->
+      <header class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-900 via-slate-900 to-indigo-950 text-white p-8 sm:p-12 shadow-2xl mb-10 border border-indigo-800/60">
+        <div class="absolute -right-20 -top-20 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute right-1/3 -bottom-20 w-72 h-72 bg-amber-500/15 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30 mb-4">
+            <span>💡 2026 官方知识库 · 权威解答</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+            科学上网与主流机场常见问题解答（FAQ）
+          </h1>
+
+          <p class="text-sm sm:text-base text-slate-300 mt-4 leading-relaxed">
+            涵盖 5 大技术核心板块、收录 24 条精选高频问答。解决您在专线选购、客户端调优、流媒体与 ChatGPT 解锁及突发断网中的所有疑难杂症。
+          </p>
+
+          <!-- 实时快速搜索框 -->
+          <div class="mt-8 relative max-w-xl">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <input
+              id="faq-search-input"
+              type="text"
+              placeholder="快速检索问题，如：晚高峰、ChatGPT、小火箭、假断网、退款..."
+              class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-white/10 dark:bg-white/10 text-white placeholder-slate-400 text-sm sm:text-base border border-white/20 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:bg-white/15 transition-all shadow-inner backdrop-blur-md"
+            />
+          </div>
+        </div>
+      </header>
+
+      <!-- 分类筛选选项卡与控制栏 -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-slate-200 dark:border-slate-800">
+        <!-- 分类按钮组 -->
+        <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+          {faqCategories.map((cat, idx) => (
+            <button
+              type="button"
+              class={`faq-cat-btn px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+                idx === 0
+                  ? 'bg-indigo-600 text-white shadow-xs'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+              }`}
+              data-cat={cat.key}
+            >
+              <span>{cat.icon}</span>
+              <span class="ml-1">{cat.name}</span>
+            </button>
+          ))}
+        </div>
+
+        <!-- 一键展开/收起 -->
+        <div class="flex items-center gap-2 self-end sm:self-auto shrink-0 text-xs text-slate-500">
+          <button
+            id="faq-expand-all"
+            type="button"
+            class="px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+          >
+            全部展开
+          </button>
+          <button
+            id="faq-collapse-all"
+            type="button"
+            class="px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+          >
+            全部收起
+          </button>
+        </div>
+      </div>
+
+      <!-- FAQ 统计状态提示 -->
+      <div class="flex items-center justify-between text-xs text-slate-400 mb-6">
+        <div>
+          当前筛选展示 <strong id="faq-count" class="text-indigo-600 dark:text-indigo-400 text-sm font-black">{faqData.length}</strong> 条相关解答
+        </div>
+        <div>
+          最后同步校核：<span class="font-bold text-slate-600 dark:text-slate-300">2026-11-13</span>
+        </div>
+      </div>
+
+      <!-- FAQ 主折叠列表区 -->
+      <div id="faq-list" class="space-y-4">
+        {faqData.map((faq, idx) => (
+          <details
+            class="faq-item group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-5 sm:p-6 open:shadow-lg open:border-indigo-500/40 dark:open:border-indigo-500/40 transition-all"
+            data-cat={faq.category}
+            data-question={faq.question}
+            data-answer={faq.answer}
+          >
+            <summary class="flex items-center justify-between font-bold text-slate-900 dark:text-white cursor-pointer list-none text-base sm:text-lg select-none gap-4">
+              <div class="flex items-start gap-3">
+                <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-400 font-black text-xs shrink-0 mt-0.5">
+                  Q{idx + 1}
+                </span>
+                <div>
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <a
+                      href={`/faq/${faq.slug}`}
+                      class="faq-question-text leading-snug hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                      title="点击直接访问独立文章页面"
+                    >
+                      {faq.question}
+                    </a>
+                    {faq.badge && (
+                      <span class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-200/80 dark:border-amber-800/80">
+                        {faq.badge}
+                      </span>
+                    )}
+                  </div>
+                  <span class="block text-xs font-normal text-slate-400 mt-1">
+                    所属分类：{faq.categoryName}
+                  </span>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2 shrink-0">
+                <a
+                  href={`/faq/${faq.slug}`}
+                  class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 hover:bg-indigo-50 dark:bg-slate-800 dark:hover:bg-indigo-950/60 text-slate-600 hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400 border border-slate-200 dark:border-slate-700 transition-all"
+                  title="直接阅读独立文章页面"
+                >
+                  <span>专文详情</span>
+                  <span>&rarr;</span>
+                </a>
+                <span class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 group-open:rotate-180 group-open:bg-indigo-600 group-open:text-white transition-all shrink-0">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </span>
+              </div>
+            </summary>
+
+            <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed pl-10 whitespace-pre-line faq-answer-text">
+              <p>{faq.answer}</p>
+              
+              <!-- 独立文章跳转专用按钮 -->
+              <div class="mt-5 pt-3.5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between flex-wrap gap-3">
+                <span class="text-xs text-slate-400">已收录于 2026 官方知识库</span>
+                <a
+                  href={`/faq/${faq.slug}`}
+                  class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-black text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 transition-all shadow-xs"
+                >
+                  <span>👉 阅读完整技术精讲与图文长文（独立页面）</span>
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </details>
+        ))}
+      </div>
+
+      <!-- 搜索无结果时的空状态 -->
+      <div id="faq-empty" class="hidden text-center py-16 bg-slate-50 dark:bg-slate-900/40 rounded-3xl border border-dashed border-slate-300 dark:border-slate-800 my-8">
+        <div class="text-4xl mb-3">🔍</div>
+        <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100">未找到匹配的问题</h3>
+        <p class="text-xs sm:text-sm text-slate-500 mt-1">
+          建议尝试更换更简短的关键词，或者点击上方分类直接翻阅全部问答。
+        </p>
+      </div>
+
+      <!-- 底部拓展服务卡片 -->
+      <section class="mt-16 pt-10 border-t border-slate-200 dark:border-slate-800 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950 flex items-center justify-center text-xl mb-4">
+              📖
+            </div>
+            <h3 class="text-base font-black text-slate-900 dark:text-white mb-2">客户端全套图文教程</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              Windows、Mac、iOS、Android 全平台订阅导入、TUN 模式及分流规则手把手教学。
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
+            <a href="/tutorials" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
+              进入教程中心 &rarr;
+            </a>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950 flex items-center justify-center text-xl mb-4">
+              👑
+            </div>
+            <h3 class="text-base font-black text-slate-900 dark:text-white mb-2">本站独家主推第一名：隐形人</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              全节点企业 IEPL 纯专线直连，轻量 VLESS 协议，晚高峰 0 丢包，60 节点全景评测。
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
+            <a href="/airports/invisible-cloud" class="text-xs font-bold text-amber-600 dark:text-amber-400 hover:underline">
+              查阅隐形人独家测评 &rarr;
+            </a>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950 flex items-center justify-center text-xl mb-4">
+              ⚡
+            </div>
+            <h3 class="text-base font-black text-slate-900 dark:text-white mb-2">晚高峰 28 家实测天梯榜</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              持续一周晚高峰真机千兆压测，跑分拒绝虚标，带您一眼看清哪家真正稳定。
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
+            <a href="/speedtest" class="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline">
+              查看晚高峰测速天梯 &rarr;
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</Layout>
+
+<script>
+  // 交互逻辑：实时搜索、分类切换、一键展开与收起
+  const searchInput = document.getElementById('faq-search-input') as HTMLInputElement | null;
+  const catBtns = document.querySelectorAll('.faq-cat-btn');
+  const faqItems = document.querySelectorAll('.faq-item') as NodeListOf<HTMLDetailsElement>;
+  const emptyState = document.getElementById('faq-empty');
+  const countEl = document.getElementById('faq-count');
+  const expandAllBtn = document.getElementById('faq-expand-all');
+  const collapseAllBtn = document.getElementById('faq-collapse-all');
+
+  let activeCategory = 'all';
+  let searchQuery = '';
+
+  function filterFaqs() {
+    let visibleCount = 0;
+    const query = searchQuery.trim().toLowerCase();
+
+    faqItems.forEach((item) => {
+      const cat = item.getAttribute('data-cat') || '';
+      const question = (item.getAttribute('data-question') || '').toLowerCase();
+      const answer = (item.getAttribute('data-answer') || '').toLowerCase();
+
+      const matchCat = activeCategory === 'all' || cat === activeCategory;
+      const matchSearch = !query || question.includes(query) || answer.includes(query);
+
+      if (matchCat && matchSearch) {
+        item.style.display = '';
+        visibleCount++;
+        // 搜索时自动展开匹配项方便快速查看
+        if (query) {
+          item.open = true;
+        }
+      } else {
+        item.style.display = 'none';
+      }
+    });
+
+    if (countEl) {
+      countEl.textContent = String(visibleCount);
+    }
+    if (emptyState) {
+      if (visibleCount === 0) {
+        emptyState.classList.remove('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+      }
+    }
+  }
+
+  // 1. 搜索框监听
+  searchInput?.addEventListener('input', (e) => {
+    searchQuery = (e.target as HTMLInputElement).value;
+    filterFaqs();
+  });
+
+  // 2. 分类按钮监听
+  catBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const cat = btn.getAttribute('data-cat') || 'all';
+      activeCategory = cat;
+
+      catBtns.forEach((b) => {
+        b.classList.remove('bg-indigo-600', 'text-white', 'shadow-xs');
+        b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+      });
+      btn.classList.add('bg-indigo-600', 'text-white', 'shadow-xs');
+      btn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+
+      filterFaqs();
+    });
+  });
+
+  // 3. 一键全部展开 / 收起
+  expandAllBtn?.addEventListener('click', () => {
+    faqItems.forEach((item) => {
+      if (item.style.display !== 'none') {
+        item.open = true;
+      }
+    });
+  });
+
+  collapseAllBtn?.addEventListener('click', () => {
+    faqItems.forEach((item) => {
+      item.open = false;
+    });
+  });
+</script>

@@ -1,0 +1,209 @@
+---
+import AirportCard from './AirportCard.astro';
+import { airportsData } from '../data/airports';
+---
+
+<section id="airports" class="py-12 sm:py-16">
+  <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Title & Subtitle -->
+    <div class="text-center max-w-3xl mx-auto mb-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200/80 dark:border-indigo-800 mb-3">
+        <span>🏆 2026 年度公认稳定机场排行榜</span>
+      </div>
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        2026 主流机场节点综合推荐榜单
+      </h2>
+      <p class="text-base text-slate-600 dark:text-slate-400 mt-3 leading-relaxed">
+        严格实测收录 28 家主流高可用节点机场，全面覆盖企业级 IEPL 专线、高速中继与亲民大流量平价梯子。专属折上折优惠码一键复制，直达官网开通。
+      </p>
+    </div>
+
+    <!-- Filter Control Bar -->
+    <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800 shadow-sm mb-8 space-y-4">
+      <!-- Row 1: Line Type -->
+      <div class="flex items-center flex-wrap gap-2 text-xs sm:text-sm">
+        <span class="font-bold text-slate-400 dark:text-slate-500 w-20 shrink-0">线路类型:</span>
+        <button type="button" class="filter-line-btn active px-3.5 py-1.5 rounded-xl font-medium transition-all bg-indigo-600 text-white" data-line="all">全部线路</button>
+        <button type="button" class="filter-line-btn px-3.5 py-1.5 rounded-xl font-medium transition-all bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700" data-line="IPLC专线">IPLC企业专线 (不过墙)</button>
+        <button type="button" class="filter-line-btn px-3.5 py-1.5 rounded-xl font-medium transition-all bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700" data-line="IEPL专线">IEPL专线</button>
+        <button type="button" class="filter-line-btn px-3.5 py-1.5 rounded-xl font-medium transition-all bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700" data-line="BGP中继">BGP中继 (性价比高)</button>
+      </div>
+
+      <!-- Row 2: Price Filters -->
+      <div class="flex items-center flex-wrap gap-2 text-xs sm:text-sm pt-2 border-t border-slate-100 dark:border-slate-800">
+        <span class="font-bold text-slate-400 dark:text-slate-500 w-20 shrink-0">价格区间:</span>
+        <button type="button" class="filter-price-btn active px-3.5 py-1.5 rounded-xl font-medium transition-all bg-indigo-600 text-white" data-price="all">不限价格</button>
+        <button type="button" class="filter-price-btn px-3.5 py-1.5 rounded-xl font-medium transition-all bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700" data-price="low">¥15 以下 (超低月付)</button>
+        <button type="button" class="filter-price-btn px-3.5 py-1.5 rounded-xl font-medium transition-all bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700" data-price="mid">¥15 - ¥30 (主力推荐)</button>
+        <button type="button" class="filter-price-btn px-3.5 py-1.5 rounded-xl font-medium transition-all bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700" data-price="high">¥30 以上 (高端住宅IP)</button>
+      </div>
+
+      <!-- Row 3: Feature Tag Filters -->
+      <div class="flex items-center flex-wrap gap-2 text-xs sm:text-sm pt-2 border-t border-slate-100 dark:border-slate-800">
+        <span class="font-bold text-slate-400 dark:text-slate-500 w-20 shrink-0">应用场景:</span>
+        <button type="button" class="filter-tag-btn active px-3 py-1 rounded-lg text-xs font-medium transition-all bg-indigo-600 text-white" data-tag="all">全部场景</button>
+        <button type="button" class="filter-tag-btn px-3 py-1 rounded-lg text-xs font-medium transition-all bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700" data-tag="chatgpt">🤖 ChatGPT / Claude 极速响应</button>
+        <button type="button" class="filter-tag-btn px-3 py-1 rounded-lg text-xs font-medium transition-all bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700" data-tag="streaming">🎬 4K/8K 流媒体全解锁</button>
+        <button type="button" class="filter-tag-btn px-3 py-1 rounded-lg text-xs font-medium transition-all bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700" data-tag="stable">🛡️ 晚高峰 0 丢包稳定</button>
+      </div>
+    </div>
+
+    <!-- Active matches indicator & reset -->
+    <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 mb-6 px-1">
+      <div>当前共找到 <span id="match-count" class="font-bold text-indigo-600 dark:text-indigo-400">{airportsData.length}</span> 家符合条件的精选机场</div>
+      <button id="reset-filter-btn" class="hover:text-indigo-600 dark:hover:text-indigo-400 underline font-medium cursor-pointer">重置筛选条件</button>
+    </div>
+
+    <!-- Cards Grid Container (Row 1: 隐形人 Col-Span-Full, Row 2+: 每排4个品牌) -->
+    <div id="airports-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+      {airportsData.map((airport, index) => (
+        <AirportCard airport={airport} index={index} />
+      ))}
+    </div>
+
+    <!-- Empty state (hidden by default) -->
+    <div id="no-results" class="hidden text-center py-16 px-4 bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-300 dark:border-slate-800">
+      <div class="w-12 h-12 mx-auto rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 mb-3">
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <h3 class="text-base font-bold text-slate-800 dark:text-slate-200">没有找到符合组合条件的机场</h3>
+      <p class="text-sm text-slate-500 mt-1">请尝试放宽价格或线路类型的筛选条件。</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Filter state
+  let currentLine = 'all';
+  let currentPrice = 'all';
+  let currentTag = 'all';
+
+  const cards = document.querySelectorAll('.airport-card');
+  const matchCountEl = document.getElementById('match-count');
+  const noResultsEl = document.getElementById('no-results');
+
+  const applyFilters = () => {
+    let visibleCount = 0;
+
+    cards.forEach((cardEl) => {
+      const card = cardEl as HTMLElement;
+      const line = card.dataset.line || '';
+      const price = parseFloat(card.dataset.price || '0');
+      const tags: string[] = JSON.parse(card.dataset.tags || '[]');
+
+      // Check line
+      const lineMatches = currentLine === 'all' || line.includes(currentLine);
+
+      // Check price
+      let priceMatches = false;
+      if (currentPrice === 'all') {
+        priceMatches = true;
+      } else if (currentPrice === 'low' && price < 15) {
+        priceMatches = true;
+      } else if (currentPrice === 'mid' && price >= 15 && price <= 30) {
+        priceMatches = true;
+      } else if (currentPrice === 'high' && price > 30) {
+        priceMatches = true;
+      }
+
+      // Check tag
+      const tagMatches = currentTag === 'all' || tags.includes(currentTag);
+
+      if (lineMatches && priceMatches && tagMatches) {
+        card.style.display = 'flex';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    if (matchCountEl) matchCountEl.textContent = visibleCount.toString();
+
+    if (noResultsEl) {
+      if (visibleCount === 0) {
+        noResultsEl.classList.remove('hidden');
+      } else {
+        noResultsEl.classList.add('hidden');
+      }
+    }
+  };
+
+  // Line buttons
+  const lineBtns = document.querySelectorAll('.filter-line-btn');
+  lineBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      lineBtns.forEach((b) => {
+        b.classList.remove('bg-indigo-600', 'text-white');
+        b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+      });
+      btn.classList.add('bg-indigo-600', 'text-white');
+      btn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+      currentLine = btn.getAttribute('data-line') || 'all';
+      applyFilters();
+    });
+  });
+
+  // Price buttons
+  const priceBtns = document.querySelectorAll('.filter-price-btn');
+  priceBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      priceBtns.forEach((b) => {
+        b.classList.remove('bg-indigo-600', 'text-white');
+        b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+      });
+      btn.classList.add('bg-indigo-600', 'text-white');
+      btn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+      currentPrice = btn.getAttribute('data-price') || 'all';
+      applyFilters();
+    });
+  });
+
+  // Tag buttons
+  const tagBtns = document.querySelectorAll('.filter-tag-btn');
+  tagBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      tagBtns.forEach((b) => {
+        b.classList.remove('bg-indigo-600', 'text-white');
+        b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+      });
+      btn.classList.add('bg-indigo-600', 'text-white');
+      btn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+      currentTag = btn.getAttribute('data-tag') || 'all';
+      applyFilters();
+    });
+  });
+
+  // Reset filter button
+  document.getElementById('reset-filter-btn')?.addEventListener('click', () => {
+    (document.querySelector('.filter-line-btn[data-line="all"]') as HTMLElement)?.click();
+    (document.querySelector('.filter-price-btn[data-price="all"]') as HTMLElement)?.click();
+    (document.querySelector('.filter-tag-btn[data-tag="all"]') as HTMLElement)?.click();
+  });
+
+  // Copy coupon handler
+  const couponBtns = document.querySelectorAll('.copy-coupon-btn');
+  couponBtns.forEach((btn) => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const code = btn.getAttribute('data-coupon');
+      const discount = btn.getAttribute('data-discount') || '专属折扣';
+      const name = btn.getAttribute('data-name') || '该机场';
+
+      if (code) {
+        try {
+          await navigator.clipboard.writeText(code);
+          if ((window as any).showToast) {
+            (window as any).showToast(
+              `已成功复制 ${name} 优惠码：${code}`,
+              `在官网结账时粘贴使用，立享【${discount}】！`
+            );
+          }
+        } catch (err) {
+          prompt('请手动复制优惠码：', code);
+        }
+      }
+    });
+  });
+</script>

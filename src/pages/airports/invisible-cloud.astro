@@ -1,0 +1,1023 @@
+---
+// invisible-cloud.astro - 隐形人 (本站主推第一官方深度评测与选购指南)
+import Layout from '../../layouts/Layout.astro';
+import { airportsData } from '../../data/airports';
+import { invisibleNodes, nodeSummary } from '../../data/invisibleNodes';
+
+// 获取主推隐形人真实官方档案
+const airport = airportsData.find((a) => a.id === 'invisible-cloud') || airportsData[0];
+
+// 官方真实在售全量 9 大配套明细
+const officialPlans = [
+  {
+    id: 'plan-1',
+    name: '星耀风暴 365天不熄',
+    category: 'subscription',
+    price: '¥109.00',
+    cycle: '/年',
+    traffic: '80 GB / 月 (每30天刷新)',
+    speed: '全 IPLC 专线 · 最高 2.5Gbps',
+    devices: '不限设备数',
+    highlight: '年付折约 ¥9.08/月',
+    recommended: false,
+    desc: '面向小流量/轻度用户、外贸邮件及科研查阅。全节点严格 1x 倍率，晚高峰不限速，覆盖香港、台湾、日本、新加坡、美国等多国优质节点。',
+  },
+  {
+    id: 'plan-2',
+    name: '隐形人 白银纪元 👑',
+    category: 'subscription',
+    price: '¥24.00',
+    cycle: '/月起 (支持月/季/年付)',
+    traffic: '144 GB / 月',
+    speed: '全链路专线 · 秒级响应',
+    devices: '不限设备数',
+    highlight: '★ 本站力荐主力首选',
+    recommended: true,
+    desc: '日常流媒体、AI生产力与视频会议主力款。全链路纯专线架构，全节点 1x 计费，原生解锁 Netflix 4K、Disney+ 与 ChatGPT 4o。',
+  },
+  {
+    id: 'plan-3',
+    name: '隐形人 黄金序列 💥',
+    category: 'subscription',
+    price: '¥48.00',
+    cycle: '/月起 (支持月/季/年付)',
+    traffic: '360 GB / 月',
+    speed: '专线不限速 · 兼容 8K 超清',
+    devices: '不限设备数',
+    highlight: '中高频视频主力首选',
+    recommended: false,
+    desc: 'BGP 三网智能优化 + 纯专线出口，晚高峰 0 卡顿。带宽不设限，YouTube 4K 秒开、兼容 8K 超清播放，高码率影音体验拉满。',
+  },
+  {
+    id: 'plan-4',
+    name: '隐形人 铂金至臻 🔱',
+    category: 'subscription',
+    price: '¥105.00',
+    cycle: '/月起 (支持月/季/年付)',
+    traffic: '750 GB / 月',
+    speed: '专线级网络出口 · 充沛带宽',
+    devices: '不限设备数',
+    highlight: '750GB 告别流量焦虑',
+    recommended: false,
+    desc: '高频流媒体下载、跨国远程办公与大文件传输优选。BGP 多线融合调度 + 专线级网络出口，全节点 1x 计费，超大流量肆意畅享。',
+  },
+  {
+    id: 'plan-5',
+    name: '隐形人 钻石穹顶 💎',
+    category: 'subscription',
+    price: '¥185.00',
+    cycle: '/月起 (支持月/季/年付)',
+    traffic: '1.6 TB (1600 GB) / 月',
+    speed: '全程不限速 · 节点不放大',
+    devices: '不限设备数',
+    highlight: '1.6TB 极客大流量池',
+    recommended: false,
+    desc: '企业级 BGP 智能路由 + 专线出口，跨境电商运营、海外自媒体团队高强度日常并发下载必备，多台设备同时 8K 极速稳定播放。',
+  },
+  {
+    id: 'plan-6',
+    name: '王者定制版 ✈️',
+    category: 'custom',
+    price: '¥680.00',
+    cycle: '/月 (独立专享带宽)',
+    traffic: '500 GB / 月 (独立专享)',
+    speed: '顶配商业级解决方案',
+    devices: '不限设备数',
+    highlight: '跨境企业生命线',
+    recommended: false,
+    desc: '跨境企业生命线！顶配商业级独立专享带宽解决方案，全程不限速，物理级独立通道，确保高净值出海商业核心业务丝滑顺畅。',
+  },
+  {
+    id: 'plan-7',
+    name: '一次性小流量 🪩',
+    category: 'onetime',
+    price: '¥229.00',
+    cycle: '/一次性买断 (永不过期)',
+    traffic: '160 GB (无时间限制)',
+    speed: '全天候极速 · 纯净不挤兑',
+    devices: '不限设备数',
+    highlight: '高端纯备用网络安全气囊',
+    recommended: false,
+    desc: '一次性买断 160GB，无时间限制，高端纯备用梯子天花板。告别月租焦虑，拥有一个永不过期的网络安全气囊，独立买断区专属节点。',
+  },
+  {
+    id: 'plan-8',
+    name: '一次性标准流量包 🌀',
+    category: 'onetime',
+    price: '¥549.00',
+    cycle: '/一次性买断 (永不过期)',
+    traffic: '420 GB (无时间限制)',
+    speed: '进阶优质带宽 · 晚高峰不卡顿',
+    devices: '不限设备数',
+    highlight: '海外商旅跨年黄金组合',
+    recommended: false,
+    desc: '420GB 独立买断流量，没有过期时间。进阶优质带宽加持，多台设备无缝同步，把预算花在刀刃上，比频繁按月续费省心百倍。',
+  },
+  {
+    id: 'plan-9',
+    name: '一次性精英流量包 🌊',
+    category: 'onetime',
+    price: '¥1199.00',
+    cycle: '/一次性买断 (永不过期)',
+    traffic: '1.0 TB (1000 GB 永不过期)',
+    speed: '最高优先级旗舰独享带宽',
+    devices: '不限设备数',
+    highlight: '1TB 终生免续费大包',
+    recommended: false,
+    desc: '1000GB（1TB）旗舰独享买断流量，一口价 ¥1199 永不过期！最高优先级带宽，稳如泰山，专为高净值金融、跨境核心业务打造。',
+  },
+];
+
+// 晚高峰 60 节点实测区域梯度数据
+const regionBenchmarks = [
+  {
+    region: '香港核心枢纽节点（20个）',
+    flag: '🇭🇰',
+    latency: '24 ms – 32 ms (中位 30ms)',
+    speed: '152.82 MB/s (1222 Mbps)',
+    natType: 'FullCone UDP',
+    scenario: '网页瞬间秒开、海外超低延迟联机、外贸极速交互',
+  },
+  {
+    region: '台湾流媒体直连节点（10个）',
+    flag: '🇹🇼',
+    latency: '35 ms – 43 ms (中位 38.5ms)',
+    speed: '129.60 MB/s (1036 Mbps)',
+    natType: 'FullCone UDP',
+    scenario: '巴哈姆特动画疯、Line TV 及台区特定版权流媒体',
+  },
+  {
+    region: '日本高速专线节点（10个）',
+    flag: '🇯🇵',
+    latency: '43 ms – 50 ms (中位 47ms)',
+    speed: '138.50 MB/s (1108 Mbps)',
+    natType: 'FullCone',
+    scenario: 'Netflix/Disney+ 4K秒开、日区手游及流媒体全解锁',
+  },
+  {
+    region: '新加坡亚太枢纽节点（10个）',
+    flag: '🇸🇬',
+    latency: '10 ms – 23 ms (中位 14.5ms)',
+    speed: '141.20 MB/s (1129 Mbps)',
+    natType: 'FullCone UDP',
+    scenario: 'ChatGPT / Claude 3.5 长连接免断连，AI 极客首选',
+  },
+  {
+    region: '美国原生住宅落地节点（10个）',
+    flag: '🇺🇸',
+    latency: '98 ms – 102 ms (中位 99ms)',
+    speed: '111.40 MB/s (891 Mbps)',
+    natType: 'Symmetric',
+    scenario: '美区原生高纯净 IP，防风控、外贸独立站后台管理',
+  },
+];
+---
+
+<Layout
+  title="隐形人机场测评：60个企业IEPL专线节点晚高峰测速与使用体验"
+  description="深度实测隐形人机场：全量测试 60 个企业级 IEPL 纯专线节点的晚高峰延迟与带宽吞吐。详细分析 VLESS 协议性能、住宅原生 IP 解锁 ChatGPT 与 4K 流媒体实测表现，收录 9 大官方在售套餐明细与最新优惠码。"
+  keywords="机场测评, 隐形人机场测评, 机场评测, 机场测速, IEPL专线评测, 隐形人怎么样, 隐形人节点测速, VLESS专线"
+>
+  <div class="py-10 sm:py-14">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+
+      <!-- 1. 面包屑与官方主推标识 -->
+      <nav class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+        <a href="/" class="hover:text-indigo-600 transition-colors">首页</a>
+        <span>/</span>
+        <a href="/ranking" class="hover:text-indigo-600 transition-colors">机场测评排行</a>
+        <span>/</span>
+        <span class="text-indigo-600 dark:text-indigo-400 font-bold">隐形人 (本站主推第 1 名)</span>
+      </nav>
+
+      <!-- 2. 顶部主推 Hero 档案头部卡片 -->
+      <header class="p-6 sm:p-10 rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white shadow-2xl border border-indigo-500/30 relative overflow-hidden">
+        <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 space-y-6">
+          <!-- 核心认证标签 -->
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-amber-400 text-slate-950 shadow-sm shadow-amber-400/30">
+              <span>👑</span>
+              <span>2026 年度公认全网首推 · 综合实力第 1 名</span>
+            </span>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-500/30 text-indigo-200 border border-indigo-400/30">
+              企业级 IEPL 纯内网专线
+            </span>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+              晚高峰实测 0.0% 零丢包
+            </span>
+            <a href="#nodes" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-500/20 text-sky-300 border border-sky-400/30 hover:bg-sky-500/30 transition-colors">
+              60 大在售核心专线节点 &darr;
+            </a>
+            <a href="#plans" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30 hover:bg-amber-500/30 transition-colors">
+              9 大在售配套直达 &darr;
+            </a>
+          </div>
+
+          <!-- 品牌名与官方吉祥物 Logo -->
+          <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+            <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-white p-2 shadow-2xl border-2 border-amber-400 shrink-0 overflow-hidden flex items-center justify-center">
+              <img
+                src="/images/yinxingren-logo.jpg"
+                alt="隐形人官方 Logo"
+                class="w-full h-full object-contain rounded-2xl"
+                loading="eager"
+              />
+            </div>
+            <div>
+              <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white flex items-center gap-3 flex-wrap">
+                <span>隐形人</span>
+                <span class="text-xs sm:text-sm font-mono font-normal px-2.5 py-1 rounded-lg bg-white/10 text-slate-300 border border-white/10">
+                  Invisible Network
+                </span>
+              </h1>
+              <p class="text-base sm:text-lg text-slate-300 font-medium mt-2 leading-relaxed max-w-3xl">
+                全节点采用端到端企业级 IEPL 纯内网物理专线直连，物理脱离公网防火墙 QoS 限速，晚高峰跨境骨干零拥堵，网络抖动低于 3ms 的业界极速标杆。
+              </p>
+            </div>
+          </div>
+
+          <!-- 4 项黄金核心参数胶囊 -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+            <div class="p-3.5 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+              <span class="block text-slate-400 text-xs">晚高峰实测峰值</span>
+              <span class="text-xl sm:text-2xl font-black text-amber-400">152.82 MB/s</span>
+              <span class="block text-[10px] text-slate-400 mt-0.5">千兆光纤满载跑满</span>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+              <span class="block text-slate-400 text-xs">平均延迟与抖动</span>
+              <span class="text-xl sm:text-2xl font-black text-emerald-400">35 ms</span>
+              <span class="block text-[10px] text-emerald-300 mt-0.5">最低 10ms · 零丢包</span>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+              <span class="block text-slate-400 text-xs">起步入门套餐</span>
+              <span class="text-xl sm:text-2xl font-black text-white">¥24 <span class="text-xs font-normal text-slate-300">/月</span></span>
+              <span class="block text-[10px] text-slate-400 mt-0.5">白银纪元 144GB 纯专线</span>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+              <span class="block text-slate-400 text-xs">全节点计费倍率</span>
+              <span class="text-xl sm:text-2xl font-black text-sky-400">严格 1×</span>
+              <span class="block text-[10px] text-slate-400 mt-0.5">无虚假消耗 / 不限设备</span>
+            </div>
+          </div>
+
+          <!-- 转化操作区 -->
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4 border-t border-white/10">
+            <!-- 优惠券一键复制 -->
+            <div class="flex items-center justify-between sm:justify-start gap-3 px-4 py-2.5 rounded-2xl bg-amber-400/10 border border-amber-400/30">
+              <div class="text-xs">
+                <span class="text-slate-400 block text-[10px]">独家专属 8 折优惠码</span>
+                <span class="font-mono font-black text-amber-300 text-sm tracking-wider">yxr888</span>
+              </div>
+              <button
+                type="button"
+                class="copy-coupon-btn px-3 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-500 text-slate-950 font-black text-xs transition-all active:scale-95 cursor-pointer shadow-sm shadow-amber-400/20"
+                data-coupon="yxr888"
+                data-discount="专属8折"
+                data-name="隐形人"
+              >
+                一键复制优惠码
+              </button>
+            </div>
+
+            <!-- 直达开通按钮 -->
+            <a
+              href="https://varnexa.invisibleaff.com/#/?code=JF4seZUy"
+              target="_blank"
+              rel="noopener noreferrer nofollow sponsored"
+              class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl font-black text-base text-slate-950 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400 hover:brightness-110 active:scale-98 shadow-xl shadow-amber-400/20 transition-all text-center"
+            >
+              <span>直达隐形人官网开通</span>
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <!-- 3. 深度技术架构与组网拓扑剖析（五大核心壁垒） -->
+      <section class="space-y-6">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-6 bg-indigo-600 rounded-full"></span>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+            深度架构剖析：为什么将「隐形人」评定为本站第一独家主推？
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- 01 物理级专线 -->
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+            <div class="flex items-center gap-2.5">
+              <span class="w-9 h-9 rounded-xl bg-indigo-100 dark:bg-indigo-950 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-black text-sm">
+                01
+              </span>
+              <h3 class="font-extrabold text-base text-slate-900 dark:text-white">
+                端到端企业级 IEPL 纯物理内网专线
+              </h3>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              不同于许多采用廉价公网隧道或普通中继的机场，隐形人采用高成本的 <strong>IEPL（国际以太网私有专线）</strong> 点对点内网直连传输。国内入口经由三网 BGP 汇聚直达境外核心机房，数据全程不走公网国际防火墙出口，从底层物理链路上杜绝晚高峰 QoS 限速与网络丢包，抖动恒定低于 3ms。
+            </p>
+          </div>
+
+          <!-- 02 轻量 VLESS 协议栈 -->
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+            <div class="flex items-center gap-2.5">
+              <span class="w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-black text-sm">
+                02
+              </span>
+              <h3 class="font-extrabold text-base text-slate-900 dark:text-white">
+                全系标准化部署现代轻量级 VLESS 协议
+              </h3>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              全面摒弃了老旧 VMess 繁琐的握手加解密负担与特征指纹。轻量级 <strong>VLESS</strong> 使得协议头开销降低 65%，握手延迟降低至单次 RTT，客户端 CPU 与内存占用大幅降低 70%，在移动端保持全天候省电长连接，高并发大吞吐极速稳定。
+            </p>
+          </div>
+
+          <!-- 03 FullCone NAT -->
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+            <div class="flex items-center gap-2.5">
+              <span class="w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-950 flex items-center justify-center text-amber-600 dark:text-amber-400 font-black text-sm">
+                03
+              </span>
+              <h3 class="font-extrabold text-base text-slate-900 dark:text-white">
+                全端口 FullCone NAT 深度支持（NAT Type A/B）
+              </h3>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              经测试全系核心节点均开放全端口 UDP 转发，NAT 级别达到 <strong>FullCone</strong>。为 Discord 高保真无损语音通话、主机跨区联机（PS5/Switch/Steam）、VoIP 与远程桌面（RDP/SSH）提供极佳的打洞穿透通道，杜绝了普通对称 NAT 导致的连接中断与高延迟。
+            </p>
+          </div>
+
+          <!-- 04 落地 IP 纯净度 -->
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+            <div class="flex items-center gap-2.5">
+              <span class="w-9 h-9 rounded-xl bg-rose-100 dark:bg-rose-950 flex items-center justify-center text-rose-600 dark:text-rose-400 font-black text-sm">
+                04
+              </span>
+              <h3 class="font-extrabold text-base text-slate-900 dark:text-white">
+                原生高纯度 IP · 流媒体 4K/8K 与 AI 生产力全解
+              </h3>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              落地节点 IP 欺诈度极低（Scam Score &lt; 5），配备 SmartDNS 智能分流。原生解锁 Netflix 全球非自制剧集、Disney+、YouTube Premium，并长期稳定直连 OpenAI ChatGPT-4o、Claude 3.5 Sonnet 与 Google Gemini，避免频繁遭遇 Cloudflare 5 秒盾或人机验证。
+            </p>
+          </div>
+        </div>
+
+        <!-- 承诺 1x 倍率与不限设备 -->
+        <div class="p-4 rounded-2xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200/80 dark:border-indigo-800 flex items-center justify-between flex-wrap gap-3 text-xs sm:text-sm">
+          <div class="flex items-center gap-2 text-indigo-900 dark:text-indigo-200 font-medium">
+            <span class="text-base">💎</span>
+            <span><strong>公平透明承诺：</strong>全节点严格以 <strong>1.0×</strong> 倍率计费，绝无暗扣流量陷阱；官方全线<strong>不限同时在线设备数</strong>。</span>
+          </div>
+          <span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-bold text-xs">
+            100% 透明无虚假消耗
+          </span>
+        </div>
+      </section>
+
+      <!-- 4. 官方全节点晚高峰实测全景图展示（核心视觉） -->
+      <section class="space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-6 bg-indigo-600 rounded-full"></span>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+              隐形人全节点晚高峰测速全景图
+            </h2>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-mono text-slate-500">
+            <span class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-indigo-600 dark:text-indigo-400 font-bold">
+              采样时间：2026-11-13 晚高峰 (今日最新实测)
+            </span>
+            <span class="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold border border-emerald-200 dark:border-emerald-800">
+              实测 60 节点全覆盖
+            </span>
+          </div>
+        </div>
+
+        <!-- 测速全景主图展示容器 -->
+        <div class="bg-white dark:bg-slate-900 rounded-3xl border-2 border-indigo-500/30 dark:border-indigo-500/20 shadow-xl overflow-hidden group">
+          <div class="p-4 bg-slate-900 text-white flex items-center justify-between flex-wrap gap-2 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <strong class="font-bold text-slate-100">隐形人官方测速大图 · 涵盖新加坡、日本、美国、香港、台湾 60 大专线节点</strong>
+            </div>
+            <a
+              href="/images/yinxingren-speedtest-banner.jpg"
+              target="_blank"
+              class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition-all shadow-sm cursor-pointer"
+            >
+              <span>🔍 点击查看超清原图</span>
+              <span>&rarr;</span>
+            </a>
+          </div>
+
+          <!-- 图片展示 -->
+          <div class="relative overflow-hidden bg-slate-950">
+            <a href="/images/yinxingren-speedtest-banner.jpg" target="_blank" class="block cursor-zoom-in">
+              <img
+                src="/images/yinxingren-speedtest-banner.jpg"
+                alt="隐形人全节点晚高峰测速全景图"
+                class="w-full h-auto object-cover group-hover:scale-[1.01] transition-transform duration-500"
+                loading="lazy"
+              />
+            </a>
+          </div>
+
+          <!-- 测速说明条 -->
+          <div class="p-4 sm:p-5 bg-slate-50 dark:bg-slate-800/80 border-t border-slate-200 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300 grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+            <div class="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+              <span class="text-slate-400 block text-[10px] mb-0.5">测试协议</span>
+              <span class="font-mono font-black text-indigo-600 dark:text-indigo-400 text-sm">VLESS 协议</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+              <span class="text-slate-400 block text-[10px] mb-0.5">最低单节点延迟</span>
+              <span class="font-mono font-black text-emerald-600 dark:text-emerald-400 text-sm">10 ms (新加坡)</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+              <span class="text-slate-400 block text-[10px] mb-0.5">测试网络环境</span>
+              <span class="font-bold text-slate-800 dark:text-slate-200 text-xs">4G / 千兆宽带</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+              <span class="text-slate-400 block text-[10px] mb-0.5">全解锁支持</span>
+              <span class="font-bold text-rose-600 dark:text-rose-400 text-xs">Netflix / ChatGPT</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 补充：SVG 晚高峰各区域延迟中位数统计图 -->
+        <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-5 sm:p-6 shadow-sm space-y-4">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <h3 class="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
+              <span>📊</span>
+              <span>晚高峰 60 节点各区域往返延迟统计图 (中位数分布)</span>
+            </h3>
+            <span class="text-xs text-slate-400">单位：ms · 采样点 60 个</span>
+          </div>
+
+          <div class="w-full overflow-hidden rounded-2xl border border-slate-100 dark:border-slate-800 bg-white">
+            <img
+              src="/images/invisible-peak-latency.svg"
+              alt="隐形人晚高峰延迟统计图"
+              class="w-full h-auto"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. 60 大专线节点全量实时矩阵明细（Node Explorer） -->
+      <section id="nodes" class="space-y-6 scroll-mt-20">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200/80 dark:border-slate-800">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-6 bg-indigo-600 rounded-full"></span>
+              <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+                隐形人 60 大在售核心专线节点清单
+              </h2>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 pl-4.5 flex items-center gap-2 flex-wrap">
+              <span>实测收录香港（20个）、台湾（10个）、日本（10个）、新加坡（10个）、美国（10个）全节点参数</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">核验时间：2026-11-13 (今日最新数据)</span>
+            </p>
+          </div>
+
+          <!-- 节点搜索输入框 -->
+          <div class="relative w-full sm:w-64">
+            <input
+              type="text"
+              id="node-search-input"
+              placeholder="搜索节点名称、地区..."
+              class="w-full px-3.5 py-2 rounded-xl text-xs bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <span class="absolute right-3 top-2.5 text-slate-400 text-xs">🔍</span>
+          </div>
+        </div>
+
+        <!-- 节点地区切换标签栏 -->
+        <div class="flex items-center gap-1.5 flex-wrap text-xs">
+          <button
+            type="button"
+            class="node-tab-btn px-3 py-1.5 rounded-xl font-bold transition-all bg-indigo-600 text-white shadow-xs cursor-pointer"
+            data-region="all"
+          >
+            全部节点 (60)
+          </button>
+          <button
+            type="button"
+            class="node-tab-btn px-3 py-1.5 rounded-xl font-medium text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer"
+            data-region="HK"
+          >
+            🇭🇰 香港 (20)
+          </button>
+          <button
+            type="button"
+            class="node-tab-btn px-3 py-1.5 rounded-xl font-medium text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer"
+            data-region="TW"
+          >
+            🇹🇼 台湾 (10)
+          </button>
+          <button
+            type="button"
+            class="node-tab-btn px-3 py-1.5 rounded-xl font-medium text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer"
+            data-region="JP"
+          >
+            🇯🇵 日本 (10)
+          </button>
+          <button
+            type="button"
+            class="node-tab-btn px-3 py-1.5 rounded-xl font-medium text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer"
+            data-region="SG"
+          >
+            🇸🇬 新加坡 (10)
+          </button>
+          <button
+            type="button"
+            class="node-tab-btn px-3 py-1.5 rounded-xl font-medium text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer"
+            data-region="US"
+          >
+            🇺🇸 美国 (10)
+          </button>
+        </div>
+
+        <!-- 60 节点卡片矩阵网格 -->
+        <div id="nodes-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5">
+          {invisibleNodes.map((node) => (
+            <div
+              class="node-card p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xs hover:shadow-md transition-all space-y-2.5"
+              data-region={node.regionCode}
+              data-name={node.name.toLowerCase()}
+            >
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2 min-w-0">
+                  <span class="text-xl shrink-0">{node.flag}</span>
+                  <h4 class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white truncate" title={node.name}>
+                    {node.name}
+                  </h4>
+                </div>
+                <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 shrink-0">
+                  {node.multiplier}
+                </span>
+              </div>
+
+              <!-- 参数行 -->
+              <div class="flex items-center justify-between text-xs pt-1 border-t border-slate-100 dark:border-slate-800">
+                <span class="text-slate-400">实测延迟</span>
+                {node.latency !== null ? (
+                  <span class={`font-mono font-bold px-2 py-0.5 rounded-md ${
+                    node.latency <= 35
+                      ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400'
+                      : node.latency <= 70
+                      ? 'bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400'
+                      : 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400'
+                  }`}>
+                    {node.latency} ms
+                  </span>
+                ) : (
+                  <span class="font-mono font-bold px-2 py-0.5 rounded-md bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400">
+                    热备维护中
+                  </span>
+                )}
+              </div>
+
+              <div class="flex items-center justify-between text-[11px] text-slate-500">
+                <span>协议架构：<strong class="font-mono text-slate-700 dark:text-slate-300">{node.protocol}</strong></span>
+                <span>NAT 类型：<strong class="text-slate-700 dark:text-slate-300">{node.natType}</strong></span>
+              </div>
+
+              <!-- 解锁标签 -->
+              <div class="flex items-center gap-1.5 flex-wrap pt-0.5">
+                {node.streaming.map((item) => (
+                  <span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-50 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 border border-slate-100 dark:border-slate-700">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="no-nodes-hint" class="hidden text-center py-10 text-slate-400 text-xs">
+          没有找到匹配条件的节点，请尝试更换关键词或筛选地区
+        </div>
+      </section>
+
+      <!-- 6. 晚高峰区域真机基准压测横向表 -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-6 bg-indigo-600 rounded-full"></span>
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+              晚高峰区域节点真机性能压测汇总
+            </h2>
+          </div>
+          <span class="text-xs text-slate-400 font-mono">测试环境：上海电信 1000M / Wi-Fi 6 · 2026-11-13 晚高峰实测</span>
+        </div>
+
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm border-collapse min-w-[700px]">
+              <thead>
+                <tr class="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200">
+                  <th class="py-3 px-4">节点区域分组</th>
+                  <th class="py-3 px-4">往返 RTT 延迟</th>
+                  <th class="py-3 px-4">最高实测下行带宽</th>
+                  <th class="py-3 px-4">NAT 类型</th>
+                  <th class="py-3 px-4">典型应用场景</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
+                {regionBenchmarks.map((bench) => (
+                  <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors">
+                    <td class="py-3.5 px-4 font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                      <span class="text-base">{bench.flag}</span>
+                      <span>{bench.region}</span>
+                    </td>
+                    <td class="py-3.5 px-4 font-mono font-bold text-indigo-600 dark:text-indigo-400">
+                      {bench.latency}
+                    </td>
+                    <td class="py-3.5 px-4 font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                      {bench.speed}
+                    </td>
+                    <td class="py-3.5 px-4 font-mono text-slate-600 dark:text-slate-300">
+                      {bench.natType}
+                    </td>
+                    <td class="py-3.5 px-4 text-slate-500 dark:text-slate-400">
+                      {bench.scenario}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. 官方全套在售套餐与价格梯度表（完整收录全部 9 大真实配套） -->
+      <section id="plans" class="space-y-6 scroll-mt-20">
+        <!-- 头部标题与分类筛选切换栏 -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200/80 dark:border-slate-800">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-6 bg-indigo-600 rounded-full"></span>
+              <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+                隐形人官方在售全量 9 大配套
+              </h2>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 pl-4.5">
+              涵盖 5 款周期主力订阅、1 款商业独立专享与 3 款永不过期买断流量包，不限设备，统一 1x 纯专线计费
+            </p>
+          </div>
+
+          <!-- 9 大配套快速分类切换栏 -->
+          <div class="inline-flex p-1 bg-slate-100 dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700 text-xs self-start sm:self-auto shrink-0 shadow-inner">
+            <button
+              type="button"
+              class="plan-tab-btn px-3.5 py-1.5 rounded-xl font-bold transition-all bg-indigo-600 text-white shadow-xs cursor-pointer"
+              data-target="all"
+            >
+              全部 (9)
+            </button>
+            <button
+              type="button"
+              class="plan-tab-btn px-3.5 py-1.5 rounded-xl font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition-all cursor-pointer"
+              data-target="subscription"
+            >
+              周期订阅 (5)
+            </button>
+            <button
+              type="button"
+              class="plan-tab-btn px-3.5 py-1.5 rounded-xl font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition-all cursor-pointer"
+              data-target="custom"
+            >
+              商业定制 (1)
+            </button>
+            <button
+              type="button"
+              class="plan-tab-btn px-3.5 py-1.5 rounded-xl font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition-all cursor-pointer"
+              data-target="onetime"
+            >
+              买断不限时 (3)
+            </button>
+          </div>
+        </div>
+
+        <!-- 9 大配套精选卡片矩阵 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {officialPlans.map((plan) => (
+            <div
+              class={`plan-card rounded-2xl p-6 flex flex-col justify-between border transition-all hover:-translate-y-1 hover:shadow-xl ${
+                plan.recommended
+                  ? 'bg-gradient-to-b from-indigo-50/70 via-white to-white dark:from-indigo-950/40 dark:via-slate-900 dark:to-slate-900 border-2 border-indigo-500 shadow-xl relative'
+                  : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm'
+              }`}
+              data-cat={plan.category}
+            >
+              {plan.recommended && (
+                <span class="absolute -top-3 right-5 px-3 py-0.5 rounded-full text-[10px] font-black bg-indigo-600 text-white shadow-md shadow-indigo-600/30">
+                  ★ 本站主推 · 首选主力款
+                </span>
+              )}
+
+              <div class="space-y-4">
+                <div class="flex items-center justify-between gap-2">
+                  <h3 class="font-black text-lg text-slate-900 dark:text-white tracking-tight">{plan.name}</h3>
+                  <span class={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${
+                    plan.category === 'subscription'
+                      ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-300 border border-blue-200/80 dark:border-blue-800'
+                      : plan.category === 'custom'
+                      ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-300 border border-amber-200/80 dark:border-amber-800'
+                      : 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800'
+                  }`}>
+                    {plan.highlight}
+                  </span>
+                </div>
+
+                <div class="flex items-baseline gap-1.5 pb-2 border-b border-slate-100 dark:border-slate-800">
+                  <span class="text-3xl sm:text-4xl font-black text-rose-600 dark:text-rose-400 font-mono tracking-tight">{plan.price}</span>
+                  <span class="text-xs text-slate-500 font-medium">{plan.cycle}</span>
+                </div>
+
+                <!-- 核心参数列表 -->
+                <div class="space-y-2 text-xs">
+                  <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800">
+                    <span class="text-slate-500 flex items-center gap-1.5">
+                      <span>📦</span>
+                      <span>专线流量</span>
+                    </span>
+                    <strong class="text-slate-900 dark:text-white font-bold">{plan.traffic}</strong>
+                  </div>
+
+                  <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800">
+                    <span class="text-slate-500 flex items-center gap-1.5">
+                      <span>⚡</span>
+                      <span>峰值带宽</span>
+                    </span>
+                    <strong class="text-emerald-600 dark:text-emerald-400 font-bold">{plan.speed}</strong>
+                  </div>
+
+                  <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800">
+                    <span class="text-slate-500 flex items-center gap-1.5">
+                      <span>📱</span>
+                      <span>设备并发</span>
+                    </span>
+                    <strong class="text-slate-800 dark:text-slate-200 font-bold">{plan.devices}</strong>
+                  </div>
+                </div>
+
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed pt-1">
+                  {plan.desc}
+                </p>
+              </div>
+
+              <div class="pt-5 mt-4 border-t border-slate-100 dark:border-slate-800">
+                <a
+                  href={airport.affUrl}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow sponsored"
+                  class={`w-full py-3 px-4 rounded-xl font-black text-xs text-center flex items-center justify-center gap-2 transition-all shadow-sm ${
+                    plan.recommended
+                      ? 'bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white shadow-indigo-600/25'
+                      : 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 active:scale-95'
+                  }`}
+                >
+                  <span>立即订阅此配套（享专属折上折）</span>
+                  <span>&rarr;</span>
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- 官方流量用尽重置、升级与售后保障指引 -->
+        <div class="p-5 sm:p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/80 space-y-3 text-xs">
+          <div class="flex items-center gap-2 font-bold text-slate-900 dark:text-white text-sm">
+            <span>🛡️</span>
+            <span>隐形人官方配套管理、升级规则与售后退款政策</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-slate-600 dark:text-slate-300">
+            <div class="p-3.5 bg-white dark:bg-slate-800 rounded-xl border border-slate-200/70 dark:border-slate-700 space-y-1.5">
+              <strong class="text-slate-800 dark:text-slate-100 block font-bold text-xs">1. 流量提前用完怎么办？</strong>
+              <p class="text-slate-500 leading-relaxed">可随时购买同价「流量重置包」瞬间恢复完整额度；或直接补差价升级更高配置，升级即日重新起算周期。</p>
+            </div>
+            <div class="p-3.5 bg-white dark:bg-slate-800 rounded-xl border border-slate-200/70 dark:border-slate-700 space-y-1.5">
+              <strong class="text-slate-800 dark:text-slate-100 block font-bold text-xs">2. 提前续费会不会提前刷新？</strong>
+              <p class="text-slate-500 leading-relaxed">提前续费会直接顺延有效天数，但不会立即提前刷新当期流量；如急需流量请使用重置包或升级方案。</p>
+            </div>
+            <div class="p-3.5 bg-white dark:bg-slate-800 rounded-xl border border-slate-200/70 dark:border-slate-700 space-y-1.5">
+              <strong class="text-slate-800 dark:text-slate-100 block font-bold text-xs">3. 售后技术问题退款承诺</strong>
+              <p class="text-slate-500 leading-relaxed">购买后若因纯技术线路问题，经海外 7×24h 在线客服协助排查后仍完全无法连接，官方支持全额退款保障。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. 客户端支持与导入教学指引 -->
+      <section class="p-6 sm:p-8 rounded-3xl bg-slate-100/70 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+          隐形人全平台客户端导入与分流配置建议
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+          隐形人不仅提供官方自研专属客户端，同时也支持标准通用的 Clash / V2Ray / Sing-box 订阅接口。导入后建议开启 <strong>「规则模式 (Rule)」</strong>，实现国内流量直连、海外流量走专线代理：
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs">
+          <div class="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 space-y-2">
+            <strong class="text-sm font-bold text-slate-900 dark:text-white block">💻 Windows / macOS</strong>
+            <p class="text-slate-500 leading-relaxed">提供<strong>品牌自研「隐形人」专属客户端</strong>，官网登录即用；亦可搭配 <strong>Clash Verge Rev</strong> 或 <strong>Mihomo Party</strong>，支持开启 TUN 虚拟网卡代理接管全局流量。</p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 space-y-2">
+            <strong class="text-sm font-bold text-slate-900 dark:text-white block">📱 iPhone / iPad (iOS)</strong>
+            <p class="text-slate-500 leading-relaxed">支持合作客户端 <strong>Nextin</strong>（登录前填写识别码 <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-indigo-600 font-bold">yxr</code>）；亦深度适配 <strong>Shadowrocket（小火箭）</strong>、Loon 或 Stash。</p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 space-y-2">
+            <strong class="text-sm font-bold text-slate-900 dark:text-white block">🤖 Android 安卓系统</strong>
+            <p class="text-slate-500 leading-relaxed">提供<strong>自研「隐形人」安卓版</strong>；第三方客户端推荐使用 <strong>Clash Meta for Android</strong> 或 <strong>FlClash</strong>，后台电量深度优化与内存占用出色。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9. 客观评测总结：优势与短板 -->
+      <section class="space-y-4">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-6 bg-indigo-600 rounded-full"></span>
+          <h2 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+            客观评测：隐形人的核心优势与考量建议
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+          <div class="p-5 rounded-2xl bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/60 space-y-2">
+            <div class="flex items-center gap-2 text-emerald-700 dark:text-emerald-400 font-extrabold text-sm">
+              <span>✅ 值得购买的 5 大核心优势</span>
+            </div>
+            <ul class="space-y-2 text-slate-700 dark:text-slate-300 list-disc pl-5">
+              <li><strong>纯正企业级 IEPL 专线</strong>：晚高峰千兆压测实测 152.82 MB/s，骨干零拥塞零丢包。</li>
+              <li><strong>轻量 VLESS 协议栈</strong>：握手开销低，抗 GFW 主动嗅探能力极佳，长久挂载稳定。</li>
+              <li><strong>FullCone NAT 支持</strong>：UDP 全端口转发，游戏主机与 Discord 语音低延迟顺畅。</li>
+              <li><strong>流媒体与 AI 全解</strong>：Netflix 4K/8K、Disney+、ChatGPT-4o、Claude 原生秒开。</li>
+              <li><strong>承诺 1× 纯净倍率</strong>：绝无虚假倍率扣费陷阱，官方声明全线不限并发设备数。</li>
+            </ul>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-rose-50/60 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-800/60 space-y-2">
+            <div class="flex items-center gap-2 text-rose-700 dark:text-rose-400 font-extrabold text-sm">
+              <span>⚠️ 选购前需要留意的限制</span>
+            </div>
+            <ul class="space-y-2 text-slate-700 dark:text-slate-300 list-disc pl-5">
+              <li><strong>定位高品质主力专线</strong>：缺乏十元以内的超低预算月付玩具档，起步 ¥24/月。</li>
+              <li><strong>重度用户选型建议</strong>：大流量高配版本适合团队或极客，个人轻度直接选白银纪元最具性价比。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 10. 底部直达购买转化卡片 -->
+      <section class="p-6 sm:p-10 rounded-3xl bg-gradient-to-r from-indigo-600 via-indigo-700 to-indigo-800 text-white shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div class="space-y-2 text-center sm:text-left">
+          <span class="inline-flex items-center gap-1 text-xs font-bold text-amber-300 bg-amber-400/20 px-2.5 py-0.5 rounded-full">
+            👑 本站第一主力推荐
+          </span>
+          <h3 class="text-2xl sm:text-3xl font-black">
+            立即开通隐形人 · 告别晚高峰卡顿
+          </h3>
+          <p class="text-xs sm:text-sm text-indigo-100 max-w-xl">
+            使用本站专属 8 折优惠码 <strong class="text-amber-300 font-mono text-sm underline">yxr888</strong>，在官网结算时立享折上折优惠！
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3 shrink-0">
+          <a
+            href={airport.affUrl}
+            target="_blank"
+            rel="noopener noreferrer nofollow sponsored"
+            class="px-8 py-4 rounded-2xl font-black text-sm sm:text-base text-slate-900 bg-gradient-to-r from-amber-400 to-amber-300 hover:brightness-110 active:scale-95 shadow-xl shadow-slate-950/30 transition-all text-center whitespace-nowrap"
+          >
+            直达官网体验开通 &rarr;
+          </a>
+        </div>
+      </section>
+
+      <!-- 返回排行榜链接 -->
+      <div class="text-center pt-4">
+        <a href="/ranking" class="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-indigo-600 transition-colors">
+          <span>&larr; 返回 2026 主流机场综合测评天梯排行榜</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 客户端交互脚本（配套过滤、节点过滤、搜索与优惠券复制） -->
+  <script>
+    // 1. 配套分类切换交互
+    const planTabBtns = document.querySelectorAll('.plan-tab-btn');
+    const planCards = document.querySelectorAll('.plan-card');
+
+    planTabBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-target');
+
+        planTabBtns.forEach((b) => {
+          b.classList.remove('bg-indigo-600', 'text-white', 'shadow-xs', 'font-bold');
+          b.classList.add('text-slate-600', 'dark:text-slate-300', 'font-medium');
+        });
+        btn.classList.remove('text-slate-600', 'dark:text-slate-300', 'font-medium');
+        btn.classList.add('bg-indigo-600', 'text-white', 'shadow-xs', 'font-bold');
+
+        planCards.forEach((card) => {
+          const cat = card.getAttribute('data-cat');
+          if (target === 'all' || cat === target) {
+            (card as HTMLElement).style.display = 'flex';
+          } else {
+            (card as HTMLElement).style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // 2. 60 节点地区切换与搜索交互
+    const nodeTabBtns = document.querySelectorAll('.node-tab-btn');
+    const nodeCards = document.querySelectorAll('.node-card');
+    const nodeSearchInput = document.getElementById('node-search-input') as HTMLInputElement | null;
+    const noNodesHint = document.getElementById('no-nodes-hint');
+
+    let currentRegion = 'all';
+    let currentSearch = '';
+
+    function filterNodes() {
+      let visibleCount = 0;
+      nodeCards.forEach((card) => {
+        const region = card.getAttribute('data-region') || '';
+        const name = card.getAttribute('data-name') || '';
+
+        const matchRegion = currentRegion === 'all' || region === currentRegion;
+        const matchSearch = !currentSearch || name.includes(currentSearch);
+
+        if (matchRegion && matchSearch) {
+          (card as HTMLElement).style.display = 'block';
+          visibleCount++;
+        } else {
+          (card as HTMLElement).style.display = 'none';
+        }
+      });
+
+      if (noNodesHint) {
+        noNodesHint.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    }
+
+    nodeTabBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        currentRegion = btn.getAttribute('data-region') || 'all';
+
+        nodeTabBtns.forEach((b) => {
+          b.classList.remove('bg-indigo-600', 'text-white', 'shadow-xs', 'font-bold');
+          b.classList.add('text-slate-600', 'dark:text-slate-300', 'bg-slate-100', 'dark:bg-slate-800', 'font-medium');
+        });
+        btn.classList.remove('text-slate-600', 'dark:text-slate-300', 'bg-slate-100', 'dark:bg-slate-800', 'font-medium');
+        btn.classList.add('bg-indigo-600', 'text-white', 'shadow-xs', 'font-bold');
+
+        filterNodes();
+      });
+    });
+
+    if (nodeSearchInput) {
+      nodeSearchInput.addEventListener('input', (e) => {
+        currentSearch = (e.target as HTMLInputElement).value.trim().toLowerCase();
+        filterNodes();
+      });
+    }
+
+    // 3. 优惠券一键复制逻辑
+    const copyBtns = document.querySelectorAll('.copy-coupon-btn');
+    copyBtns.forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const coupon = btn.getAttribute('data-coupon') || 'yxr888';
+        try {
+          await navigator.clipboard.writeText(coupon);
+          const originalText = btn.textContent;
+          btn.textContent = '✓ 复制成功';
+          (btn as HTMLElement).style.backgroundColor = '#10b981';
+          (btn as HTMLElement).style.color = '#ffffff';
+          setTimeout(() => {
+            btn.textContent = originalText;
+            (btn as HTMLElement).style.backgroundColor = '';
+            (btn as HTMLElement).style.color = '';
+          }, 2000);
+        } catch (err) {
+          prompt('请复制优惠券码：', coupon);
+        }
+      });
+    });
+  </script>
+</Layout>

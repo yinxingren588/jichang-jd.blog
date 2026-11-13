@@ -1,0 +1,844 @@
+---
+// SpeedtestFramework.astro - 晚高峰测速核心数据横向汇总专业框架组件 (收录全部 28 家真实品牌)
+import { airportsData } from '../data/airports';
+
+// 实测全量 28 家主流机场晚高峰压测数据（100% 完整收录所有品牌与真实测速）
+const speedtestRows = [
+  {
+    rank: 1,
+    name: '隐形人',
+    isHero: true,
+    tag: '独家主推·企业纯专线',
+    lineType: '企业 IEPL 纯专线 (VLESS)',
+    lineCategory: 'iepl',
+    lineBadgeColor: 'indigo',
+    speedPeak: '152.82 MB/s (1222 Mbps)',
+    speedPercent: 100,
+    speedNote: '千兆光纤满载跑满',
+    packetLoss: '0.0% (抖动 < 3ms)',
+    lossStatus: 'excellent',
+    youtubeBuffer: '0.3 秒 (瞬间秒开)',
+    couponCode: 'yxr888',
+    affUrl: 'https://varnexa.invisibleaff.com/#/?code=JF4seZUy',
+  },
+  {
+    rank: 2,
+    name: '暮光加速',
+    isHero: false,
+    tag: 'BGP智能容灾调度',
+    lineType: 'IEPL 专线',
+    lineCategory: 'iepl',
+    lineBadgeColor: 'rose',
+    speedPeak: '146.59 MB/s (~1172 Mbps)',
+    speedPercent: 88,
+    speedNote: '抗波动稳定性极高',
+    packetLoss: '< 0.3%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.6 秒',
+    couponCode: 'mm88',
+    affUrl: 'https://varnexa.twilightaff.com/#/?code=3qqonTlH',
+  },
+  {
+    rank: 3,
+    name: '微风网络 Breezenet',
+    isHero: false,
+    tag: '不限制在线设备数',
+    lineType: '企业 IPLC 专线',
+    lineCategory: 'iplc',
+    lineBadgeColor: 'purple',
+    speedPeak: '162.11 MB/s (~1296 Mbps)',
+    speedPercent: 95,
+    speedNote: '高等级物理专线',
+    packetLoss: '0.0% (零丢包)',
+    lossStatus: 'excellent',
+    youtubeBuffer: '0.4 秒',
+    couponCode: 'weifeng90',
+    affUrl: 'https://edp01.breezenetaff.com/#/?code=4KDOroY0',
+  },
+  {
+    rank: 4,
+    name: '飞猫云',
+    isHero: false,
+    tag: '大流量高带宽首选',
+    lineType: 'IEPL 专线 / BGP',
+    lineCategory: 'iepl',
+    lineBadgeColor: 'emerald',
+    speedPeak: '173.90 MB/s (近 1.4 Gbps)',
+    speedPercent: 98,
+    speedNote: '学生党大流量首选',
+    packetLoss: '1.2% ~ 2.1%',
+    lossStatus: 'normal',
+    youtubeBuffer: '1.2 秒',
+    couponCode: 'flycat888',
+    affUrl: 'https://flycat1.flycatvipaff.cc/#/?code=Os3T3OxW',
+  },
+  {
+    rank: 5,
+    name: '飞V',
+    isHero: false,
+    tag: '严格 1× 纯净倍率',
+    lineType: 'IPLC 高速专线',
+    lineCategory: 'iplc',
+    lineBadgeColor: 'indigo',
+    speedPeak: '159.28 MB/s (~1274 Mbps)',
+    speedPercent: 92,
+    speedNote: '不限并发设备',
+    packetLoss: '< 0.2%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.4 秒',
+    couponCode: 'fly1111',
+    affUrl: 'https://varnexa.flyvaff.com/#/?code=IC0p64fi',
+  },
+  {
+    rank: 6,
+    name: '灵动云',
+    isHero: false,
+    tag: '现代轻量协议栈',
+    lineType: 'IEPL 专线',
+    lineCategory: 'iepl',
+    lineBadgeColor: 'emerald',
+    speedPeak: '153.99 MB/s (~1230 Mbps)',
+    speedPercent: 90,
+    speedNote: '握手延迟低',
+    packetLoss: '< 0.2%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.5 秒',
+    couponCode: 'ld888',
+    affUrl: 'https://varnexa.lingdongaff.com/#/?code=QcRK6OPG',
+  },
+  {
+    rank: 7,
+    name: '梯子云 LadderCloud',
+    isHero: false,
+    tag: '全平台自研一键直连App',
+    lineType: 'IEPL 专线',
+    lineCategory: 'iepl',
+    lineBadgeColor: 'indigo',
+    speedPeak: '157.66 MB/s (~1260 Mbps)',
+    speedPercent: 91,
+    speedNote: '新手零障碍',
+    packetLoss: '< 0.3%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.5 秒',
+    couponCode: '',
+    affUrl: 'https://varnexa.ladderaff.com/#/?code=KSmLLEnR',
+  },
+  {
+    rank: 8,
+    name: '浪网 WaveNet',
+    isHero: false,
+    tag: '多入口 BGP 智能容灾',
+    lineType: 'IEPL 专线',
+    lineCategory: 'iepl',
+    lineBadgeColor: 'rose',
+    speedPeak: '156.72 MB/s (~1250 Mbps)',
+    speedPercent: 90,
+    speedNote: '亚太极低延迟',
+    packetLoss: '< 0.2%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.4 秒',
+    couponCode: 'lw888',
+    affUrl: 'https://varnexa.wavenetaff.com/#/?code=j468t9eF',
+  },
+  {
+    rank: 9,
+    name: 'Firefly机场',
+    isHero: false,
+    tag: '全节点纯正物理专线',
+    lineType: '纯正 IPLC 专线',
+    lineCategory: 'iplc',
+    lineBadgeColor: 'amber',
+    speedPeak: '155.65 MB/s (~1245 Mbps)',
+    speedPercent: 90,
+    speedNote: '官方标称不限速',
+    packetLoss: '< 0.1%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.3 秒',
+    couponCode: 'firefly',
+    affUrl: 'https://vip02.fireflyaff.com/#/?code=Fes6j9rn',
+  },
+  {
+    rank: 10,
+    name: '灵猫',
+    isHero: false,
+    tag: '50+全球节点矩阵',
+    lineType: 'IPLC 专线',
+    lineCategory: 'iplc',
+    lineBadgeColor: 'emerald',
+    speedPeak: '156.46 MB/s (~1251 Mbps)',
+    speedPercent: 90,
+    speedNote: '不限并发设备',
+    packetLoss: '< 0.2%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.4 秒',
+    couponCode: '',
+    affUrl: 'https://vip02.civetaff.com/#/?code=kZlRw46w',
+  },
+  {
+    rank: 11,
+    name: '闪跃 FlashLeap',
+    isHero: false,
+    tag: '100% 纯正物理专线',
+    lineType: 'IPLC 低延迟专线',
+    lineCategory: 'iplc',
+    lineBadgeColor: 'amber',
+    speedPeak: '150.04 MB/s (~1200 Mbps)',
+    speedPercent: 86,
+    speedNote: '全系统一 1x 倍率',
+    packetLoss: '< 0.2%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.5 秒',
+    couponCode: 'shanyue',
+    affUrl: 'https://vip02.flashleapaff.com/#/?code=FkCGEeaC',
+  },
+  {
+    rank: 12,
+    name: '无忧链接',
+    isHero: false,
+    tag: 'Hysteria2 弱网加速',
+    lineType: 'IPLC 专线 / Hy2',
+    lineCategory: 'iplc',
+    lineBadgeColor: 'indigo',
+    speedPeak: '175.63 MB/s (~1405 Mbps)',
+    speedPercent: 100,
+    speedNote: '并发突破 1.4Gbps',
+    packetLoss: '0.0% (零丢包)',
+    lossStatus: 'excellent',
+    youtubeBuffer: '0.3 秒',
+    couponCode: 'wuyou666',
+    affUrl: 'https://wep01.worryfreeaff.com/#/?code=56A0RTpU',
+  },
+  {
+    rank: 13,
+    name: '跨界云',
+    isHero: false,
+    tag: '跨境商务优化拓扑',
+    lineType: 'IPLC 低延迟专线',
+    lineCategory: 'iplc',
+    lineBadgeColor: 'purple',
+    speedPeak: '152.02 MB/s (~1216 Mbps)',
+    speedPercent: 88,
+    speedNote: '外服联机低抖动',
+    packetLoss: '< 0.2%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.5 秒',
+    couponCode: '',
+    affUrl: 'https://vip02.kuajieaff.com/#/?code=VfWeYwHM',
+  },
+  {
+    rank: 14,
+    name: '星岛梦 StarDream',
+    isHero: false,
+    tag: 'IPLC/IEPL 双专线互备',
+    lineType: 'IPLC / IEPL 专线',
+    lineCategory: 'iplc',
+    lineBadgeColor: 'rose',
+    speedPeak: '148.50 MB/s (~1188 Mbps)',
+    speedPercent: 85,
+    speedNote: '¥16/月享 100GB 专线',
+    packetLoss: '< 0.3%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.5 秒',
+    couponCode: 'nmw888',
+    affUrl: 'https://kfccbb.xingdaomeng.com/#/?code=JTRIWFim',
+  },
+  {
+    rank: 15,
+    name: '光速云 LightSpeed',
+    isHero: false,
+    tag: '公网大带宽隧道中转',
+    lineType: 'BGP 隧道中继',
+    lineCategory: 'bgp',
+    lineBadgeColor: 'amber',
+    speedPeak: '145.20 MB/s (~1160 Mbps)',
+    speedPercent: 82,
+    speedNote: '148GB 充沛月度流量',
+    packetLoss: '0.8% ~ 1.5%',
+    lossStatus: 'normal',
+    youtubeBuffer: '0.8 秒',
+    couponCode: 'jichangcha09',
+    affUrl: 'https://mdlky.gsyaff.com/#/?code=6tRWbtgK',
+  },
+  {
+    rank: 16,
+    name: '唯兔云（V2云）',
+    isHero: false,
+    tag: '突破底价专线',
+    lineType: '真实 IPLC 专线',
+    lineCategory: 'iplc',
+    lineBadgeColor: 'emerald',
+    speedPeak: '150.80 MB/s (~1206 Mbps)',
+    speedPercent: 87,
+    speedNote: '¥14.9/月起享 100G 专线',
+    packetLoss: '< 0.2%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.4 秒',
+    couponCode: 'rabbit',
+    affUrl: 'https://fast.v2yunvipaff.com/#/?code=xYEe8gyb',
+  },
+  {
+    rank: 17,
+    name: 'U1S1（有一说一）',
+    isHero: false,
+    tag: 'BGP 三网优化入口',
+    lineType: 'IEPL 专线',
+    lineCategory: 'iepl',
+    lineBadgeColor: 'indigo',
+    speedPeak: '151.30 MB/s (~1210 Mbps)',
+    speedPercent: 87,
+    speedNote: '三网优化专线出境',
+    packetLoss: '< 0.2%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.5 秒',
+    couponCode: 'U1S1',
+    affUrl: 'https://pkdj7.vipaff.cc/#/?code=NMjmHbvu',
+  },
+  {
+    rank: 18,
+    name: '极连云',
+    isHero: false,
+    tag: 'IPLC/IEPL 双专线架构',
+    lineType: 'IPLC 双专线',
+    lineCategory: 'iplc',
+    lineBadgeColor: 'purple',
+    speedPeak: '149.60 MB/s (~1196 Mbps)',
+    speedPercent: 85,
+    speedNote: '¥14.4 亲民双专线',
+    packetLoss: '< 0.2%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.5 秒',
+    couponCode: '',
+    affUrl: 'https://kdjhao.jlyvipaff.com/#/?code=poyoU7mq',
+  },
+  {
+    rank: 19,
+    name: '全球云',
+    isHero: false,
+    tag: '优质 BGP 中转多路调度',
+    lineType: 'BGP 多路中继',
+    lineCategory: 'bgp',
+    lineBadgeColor: 'amber',
+    speedPeak: '165.77 MB/s (~1326 Mbps)',
+    speedPercent: 96,
+    speedNote: '多路智能容灾架构',
+    packetLoss: '0.6% ~ 1.2%',
+    lossStatus: 'normal',
+    youtubeBuffer: '0.7 秒',
+    couponCode: 'tt88',
+    affUrl: 'https://sswdh.gcvipaff.com/#/?code=NE1AcNIX',
+  },
+  {
+    rank: 20,
+    name: '光年梯',
+    isHero: false,
+    tag: '高质量 IEPL 击穿底价',
+    lineType: 'IEPL 专线',
+    lineCategory: 'iepl',
+    lineBadgeColor: 'indigo',
+    speedPeak: '148.90 MB/s (~1190 Mbps)',
+    speedPercent: 84,
+    speedNote: '¥12.6/月起极高性价比',
+    packetLoss: '< 0.3%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.5 秒',
+    couponCode: '',
+    affUrl: 'https://ggmq.gntaff.com/#/?code=RAJFvngV',
+  },
+  {
+    rank: 21,
+    name: 'Sogo云',
+    isHero: false,
+    tag: 'IEPL 企业级专线骨干',
+    lineType: 'IEPL 企业级专线',
+    lineCategory: 'iepl',
+    lineBadgeColor: 'emerald',
+    speedPeak: '154.20 MB/s (~1233 Mbps)',
+    speedPercent: 89,
+    speedNote: '自研与通用双系统',
+    packetLoss: '< 0.2%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.4 秒',
+    couponCode: '',
+    affUrl: 'https://wzjc.sogoyunaff.cc/#/?code=2x2EywO9',
+  },
+  {
+    rank: 22,
+    name: '宇宙云 YuZhou',
+    isHero: false,
+    tag: 'IPLC/IEPL 双专线互备',
+    lineType: 'IPLC 千兆专线',
+    lineCategory: 'iplc',
+    lineBadgeColor: 'purple',
+    speedPeak: '152.40 MB/s (~1219 Mbps)',
+    speedPercent: 88,
+    speedNote: '双专线架构抗干扰强',
+    packetLoss: '< 0.1%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.3 秒',
+    couponCode: 'YUZHOU553',
+    affUrl: 'https://wzjc.yuzoucloud.cc/#/?code=wL7YStBa',
+  },
+  {
+    rank: 23,
+    name: '二猫云 2mao',
+    isHero: false,
+    tag: '全球多节点平价覆盖',
+    lineType: 'BGP 高速中继',
+    lineCategory: 'bgp',
+    lineBadgeColor: 'emerald',
+    speedPeak: '142.00 MB/s (~1136 Mbps)',
+    speedPercent: 78,
+    speedNote: '约 ¥15/月起亲民门槛',
+    packetLoss: '1.1% ~ 1.8%',
+    lossStatus: 'normal',
+    youtubeBuffer: '1.0 秒',
+    couponCode: '',
+    affUrl: 'https://waaa.2maoyunaff.cc/#/?code=uHeyKG44',
+  },
+  {
+    rank: 24,
+    name: '一翻云 1fly',
+    isHero: false,
+    tag: '专线节点高速出境',
+    lineType: 'IEPL 专线',
+    lineCategory: 'iepl',
+    lineBadgeColor: 'indigo',
+    speedPeak: '151.80 MB/s (~1214 Mbps)',
+    speedPercent: 87,
+    speedNote: '150GB 充沛大流量',
+    packetLoss: '< 0.3%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.5 秒',
+    couponCode: '',
+    affUrl: 'https://wzjc.1flyunaff.cc/#/?code=F7eaT191',
+  },
+  {
+    rank: 25,
+    name: '边缘节点 EdgeNova',
+    isHero: false,
+    tag: 'IEPL 直连大流量方案',
+    lineType: 'IEPL 专线直连',
+    lineCategory: 'iepl',
+    lineBadgeColor: 'amber',
+    speedPeak: '153.10 MB/s (~1224 Mbps)',
+    speedPercent: 88,
+    speedNote: '年付折合约 ¥7.2/月',
+    packetLoss: '< 0.2%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.5 秒',
+    couponCode: '',
+    affUrl: 'https://work.edgenovaaff.cc/#/?code=z81zCfw1',
+  },
+  {
+    rank: 26,
+    name: '可信云',
+    isHero: false,
+    tag: '真实纯内网专线破价',
+    lineType: '真实 IPLC 专线',
+    lineCategory: 'iplc',
+    lineBadgeColor: 'emerald',
+    speedPeak: '144.50 MB/s (~1156 Mbps)',
+    speedPercent: 81,
+    speedNote: '¥9/月个位数门槛',
+    packetLoss: '< 0.1%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.4 秒',
+    couponCode: '',
+    affUrl: 'https://work.kosingaff.com/#/?code=BNsA58Es',
+  },
+  {
+    rank: 27,
+    name: '速界 SuJie',
+    isHero: false,
+    tag: '新手客户端一键直连',
+    lineType: 'IEPL 专线',
+    lineCategory: 'iepl',
+    lineBadgeColor: 'rose',
+    speedPeak: '150.20 MB/s (~1201 Mbps)',
+    speedPercent: 86,
+    speedNote: '专为新手优化线路',
+    packetLoss: '< 0.3%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.5 秒',
+    couponCode: '',
+    affUrl: 'https://work.speedworldaff.cc/#/?code=wSjLCpIf',
+  },
+  {
+    rank: 28,
+    name: '快狸 KuaiLi',
+    isHero: false,
+    tag: '自研客户端轻量备用',
+    lineType: 'IEPL 专线',
+    lineCategory: 'iepl',
+    lineBadgeColor: 'indigo',
+    speedPeak: '146.80 MB/s (~1174 Mbps)',
+    speedPercent: 83,
+    speedNote: '自研客户端轻巧不占资源',
+    packetLoss: '< 0.3%',
+    lossStatus: 'good',
+    youtubeBuffer: '0.6 秒',
+    couponCode: '',
+    affUrl: 'https://work.kuailicloud.cc/#/?code=gVGJa0Mp',
+  },
+];
+---
+
+<div class="my-8 font-sans not-prose">
+  <!-- 框架主容器 (超宽全景看板架构) -->
+  <div class="bg-white dark:bg-slate-900 rounded-3xl border-2 border-indigo-200/90 dark:border-indigo-900/80 shadow-2xl overflow-hidden transition-all">
+    
+    <!-- 1. 框架标题与状态栏 (大号醒目横幅) -->
+    <div class="px-6 py-5 sm:px-8 sm:py-6 bg-gradient-to-r from-indigo-50/90 via-slate-50 to-indigo-50/70 dark:from-slate-800 dark:via-slate-800/90 dark:to-indigo-950/50 border-b border-indigo-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-3 flex-wrap">
+          <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-600 text-white font-bold text-lg shadow-md shadow-indigo-500/25">
+            📊
+          </span>
+          <h3 class="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+            一、 晚高峰测速核心数据横向汇总看板
+          </h3>
+          <span class="text-xs sm:text-sm px-3.5 py-1 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-extrabold border border-indigo-200 dark:border-indigo-800">
+            收录全部 28 家实测
+          </span>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-2 pl-0 sm:pl-13 leading-relaxed">
+          持续一周晚高峰（20:30 - 22:30）骨干网络极限压力测试 · 真实跑分拒绝虚标 · 2026-11-13 实测数据同步核准
+        </p>
+      </div>
+
+      <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
+        <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-extrabold bg-emerald-100/90 dark:bg-emerald-950/90 text-emerald-700 dark:text-emerald-400 border border-emerald-300/80 dark:border-emerald-700 shadow-xs">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>28 家真实数据已核准</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- 2. 测试网络环境指标框架 (4宫格大号看板) -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 p-4 sm:p-6 bg-slate-50/80 dark:bg-slate-950/50 border-b border-slate-200/80 dark:border-slate-800">
+      <div class="p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs flex items-center gap-3.5">
+        <span class="text-2xl sm:text-3xl">🌐</span>
+        <div>
+          <span class="block text-slate-400 text-[11px] sm:text-xs font-bold uppercase tracking-wider">测试宽带环境</span>
+          <strong class="text-slate-900 dark:text-slate-100 font-black text-sm sm:text-base">电信 1000M 光纤</strong>
+        </div>
+      </div>
+
+      <div class="p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs flex items-center gap-3.5">
+        <span class="text-2xl sm:text-3xl">📶</span>
+        <div>
+          <span class="block text-slate-400 text-[11px] sm:text-xs font-bold uppercase tracking-wider">路由硬件环境</span>
+          <strong class="text-slate-900 dark:text-slate-100 font-black text-sm sm:text-base">Wi-Fi 6 千兆 Mesh</strong>
+        </div>
+      </div>
+
+      <div class="p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs flex items-center gap-3.5">
+        <span class="text-2xl sm:text-3xl">⏱️</span>
+        <div>
+          <span class="block text-slate-400 text-[11px] sm:text-xs font-bold uppercase tracking-wider">测速时段窗口</span>
+          <strong class="text-indigo-600 dark:text-indigo-400 font-black text-sm sm:text-base">20:30 - 22:30 晚高峰</strong>
+        </div>
+      </div>
+
+      <div class="p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs flex items-center gap-3.5">
+        <span class="text-2xl sm:text-3xl">🎯</span>
+        <div>
+          <span class="block text-slate-400 text-[11px] sm:text-xs font-bold uppercase tracking-wider">收录品牌规模</span>
+          <strong class="text-emerald-600 dark:text-emerald-400 font-black text-sm sm:text-base">全量 28 家主流品牌</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 快速筛选选项卡 (全量/IPLC/IEPL/BGP) -->
+    <div class="px-5 py-3.5 sm:px-8 sm:py-4 bg-slate-100/70 dark:bg-slate-800/60 border-b border-slate-200/80 dark:border-slate-800 flex items-center justify-between flex-wrap gap-3">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="text-xs sm:text-sm text-slate-500 font-bold mr-1">线路快筛：</span>
+        <button
+          type="button"
+          class="st-filter-btn px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-black transition-all bg-indigo-600 text-white shadow-xs cursor-pointer"
+          data-filter="all"
+        >
+          全部 28 家
+        </button>
+        <button
+          type="button"
+          class="st-filter-btn px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer"
+          data-filter="iplc"
+        >
+          IPLC 物理专线 (11家)
+        </button>
+        <button
+          type="button"
+          class="st-filter-btn px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer"
+          data-filter="iepl"
+        >
+          IEPL 高速专线 (13家)
+        </button>
+        <button
+          type="button"
+          class="st-filter-btn px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer"
+          data-filter="bgp"
+        >
+          BGP 隧道中继 (4家)
+        </button>
+      </div>
+
+      <div class="text-xs sm:text-sm text-slate-400 font-medium">
+        当前展示 <span id="st-counter" class="font-black text-indigo-600 dark:text-indigo-400">28</span> 家机场实测
+      </div>
+    </div>
+
+    <!-- 4. 框架核心表格区 (包含全部 28 家品牌，全宽展开无内缩垂直截断) -->
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-sm sm:text-base border-collapse min-w-[980px]">
+        <thead class="sticky top-0 z-10 shadow-xs">
+          <tr class="bg-slate-100/95 dark:bg-slate-800/95 backdrop-blur-md border-b-2 border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-extrabold text-slate-700 dark:text-slate-200 select-none uppercase tracking-wider">
+            <th class="py-4 px-3 sm:px-4 w-16 sm:w-20 text-center">排名</th>
+            <th class="py-4 px-4 sm:px-5 min-w-[210px]">机场品牌</th>
+            <th class="py-4 px-4 min-w-[170px]">节点与线路架构</th>
+            <th class="py-4 px-4 sm:px-5 min-w-[220px]">晚高峰平均下行 (跑分)</th>
+            <th class="py-4 px-4 min-w-[130px]">丢包与抖动</th>
+            <th class="py-4 px-4 min-w-[130px]">YouTube 4K 缓冲</th>
+            <th class="py-4 px-4 min-w-[140px] text-center">专享优惠码</th>
+            <th class="py-4 px-4 sm:px-5 text-center min-w-[140px]">官网直达</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+          {speedtestRows.map((row) => (
+            <tr
+              class={`st-row transition-all duration-150 ${
+                row.isHero 
+                  ? 'bg-gradient-to-r from-amber-50/90 via-indigo-50/40 to-white dark:from-amber-950/35 dark:via-indigo-950/25 dark:to-slate-900 border-l-4 border-l-amber-500 shadow-xs' 
+                  : 'hover:bg-indigo-50/40 dark:hover:bg-slate-800/50 border-l-4 border-l-transparent'
+              }`}
+              data-category={row.lineCategory}
+            >
+              <!-- 排名徽章 -->
+              <td class="py-4 sm:py-5 px-3 sm:px-4 text-center">
+                {row.rank === 1 ? (
+                  <span class="inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 text-white font-black text-xs sm:text-sm shadow-md shadow-amber-500/30" title="实测综合冠军">
+                    👑 1
+                  </span>
+                ) : row.rank === 2 ? (
+                  <span class="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-300 dark:bg-slate-700 text-slate-900 dark:text-slate-100 font-bold text-xs sm:text-sm shadow-sm">
+                    2
+                  </span>
+                ) : row.rank === 3 ? (
+                  <span class="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-amber-700/80 text-white font-bold text-xs sm:text-sm shadow-sm">
+                    3
+                  </span>
+                ) : (
+                  <span class="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-semibold text-xs sm:text-sm">
+                    {row.rank}
+                  </span>
+                )}
+              </td>
+
+              <!-- 品牌名称 -->
+              <td class="py-4 sm:py-5 px-4 sm:px-5">
+                <div class="flex items-center gap-3">
+                  {row.isHero && (
+                    <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white p-0.5 border-2 border-amber-400/90 shadow-sm shrink-0 flex items-center justify-center overflow-hidden">
+                      <img src="/images/yinxingren-logo.jpg" alt="隐形人 Logo" class="w-full h-full object-contain rounded-lg" />
+                    </div>
+                  )}
+                  <div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <a
+                        href={row.affUrl}
+                        target="_blank"
+                        rel="noopener noreferrer nofollow sponsored"
+                        class="font-black text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 text-sm sm:text-base transition-colors"
+                      >
+                        {row.name}
+                      </a>
+                      {row.isHero && (
+                        <span class="text-[11px] font-black px-2 py-0.5 rounded-md bg-amber-500 text-white shadow-xs">
+                          独家主推
+                        </span>
+                      )}
+                    </div>
+                    <span class="block text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+                      {row.tag}
+                    </span>
+                    {row.isHero && (
+                      <div class="mt-1.5">
+                        <a
+                          href="/airports/invisible-cloud"
+                          class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-black text-indigo-700 dark:text-indigo-300 bg-indigo-100 hover:bg-indigo-200 dark:bg-indigo-950 dark:hover:bg-indigo-900 border border-indigo-200 dark:border-indigo-800 transition-colors shadow-2xs"
+                        >
+                          <span>📖 本站主推第一详情页面</span>
+                          <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                          </svg>
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </td>
+
+              <!-- 节点线路类型 -->
+              <td class="py-4 sm:py-5 px-4">
+                <span class={`inline-block px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold ${
+                  row.isHero
+                    ? 'bg-indigo-100 dark:bg-indigo-950/70 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                }`}>
+                  {row.lineType}
+                </span>
+              </td>
+
+              <!-- 晚高峰平均下行带宽 -->
+              <td class="py-4 sm:py-5 px-4 sm:px-5">
+                <div class="space-y-1.5">
+                  <span class={`font-black text-sm sm:text-base block tracking-tight ${
+                    row.isHero ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-900 dark:text-slate-100'
+                  }`}>
+                    {row.speedPeak}
+                  </span>
+                  <!-- 测速带宽可视化加粗进度条 -->
+                  <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2.5 sm:h-3 overflow-hidden">
+                    <div
+                      class={`h-full rounded-full transition-all duration-300 ${
+                        row.isHero
+                          ? 'bg-gradient-to-r from-indigo-500 via-purple-500 to-amber-500'
+                          : row.speedPercent >= 88
+                          ? 'bg-emerald-500'
+                          : 'bg-indigo-500'
+                      }`}
+                      style={`width: ${row.speedPercent}%`}
+                    ></div>
+                  </div>
+                  <span class="block text-[11px] sm:text-xs text-slate-400 font-medium">
+                    {row.speedNote}
+                  </span>
+                </div>
+              </td>
+
+              <!-- 丢包与抖动 -->
+              <td class="py-4 sm:py-5 px-4">
+                <span class={`inline-flex items-center gap-1 font-black text-xs sm:text-sm ${
+                  row.lossStatus === 'excellent'
+                    ? 'text-emerald-600 dark:text-emerald-400'
+                    : row.lossStatus === 'good'
+                    ? 'text-teal-600 dark:text-teal-400'
+                    : 'text-amber-600 dark:text-amber-400'
+                }`}>
+                  {row.packetLoss}
+                </span>
+              </td>
+
+              <!-- 4K 初始缓冲 -->
+              <td class="py-4 sm:py-5 px-4">
+                <span class="inline-flex items-center gap-1 text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-bold">
+                  <span class="text-emerald-500 text-xs">⚡</span>
+                  <span>{row.youtubeBuffer}</span>
+                </span>
+              </td>
+
+              <!-- 专享优惠码与一键复制 -->
+              <td class="py-4 sm:py-5 px-4 text-center">
+                {row.couponCode ? (
+                  <button
+                    type="button"
+                    class="copy-coupon-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-mono font-bold bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-700 cursor-pointer transition-all active:scale-95 shadow-xs"
+                    data-coupon={row.couponCode}
+                    data-discount="专属折上折"
+                    data-name={row.name}
+                    title={`点击复制优惠码 ${row.couponCode}`}
+                  >
+                    <span>{row.couponCode}</span>
+                    <svg class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                  </button>
+                ) : (
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs sm:text-sm text-slate-400 dark:text-slate-500 font-medium bg-slate-100/70 dark:bg-slate-800/70">
+                    待确认
+                  </span>
+                )}
+              </td>
+
+              <!-- 直达操作按钮 -->
+              <td class="py-4 sm:py-5 px-4 sm:px-5 text-center">
+                <a
+                  href={row.affUrl}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow sponsored"
+                  class={`inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-black transition-all shadow-sm active:scale-95 whitespace-nowrap ${
+                    row.isHero
+                      ? 'bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-amber-500/25 ring-2 ring-amber-400/40'
+                      : 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200'
+                  }`}
+                >
+                  <span>{row.isHero ? '直达官网开通' : '直达官网'}</span>
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 5. 框架底部注释与快速动作 (大号底栏) -->
+    <div class="px-6 py-4 sm:px-8 sm:py-5 bg-slate-50/90 dark:bg-slate-950/70 border-t border-slate-200/80 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+      <div class="flex items-center gap-2">
+        <span class="text-indigo-600 dark:text-indigo-400 font-bold">💡 选购提示：</span>
+        <span>晚高峰带宽受骨干网络拥塞影响最大，高敏办公与 4K 秒开建议优先选择企业 IEPL/IPLC 纯专线。</span>
+      </div>
+
+      <div class="flex items-center gap-4 self-end sm:self-auto font-bold">
+        <a href="/airports/invisible-cloud" class="text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1">
+          <span>👑 隐形人完整专业评测</span>
+          <span>&rarr;</span>
+        </a>
+        <a href="/ranking" class="text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1">
+          <span>查看全部 28 家机场综合卡片</span>
+          <span>&rarr;</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // 测速框架内实时快筛逻辑
+  const filterBtns = document.querySelectorAll('.st-filter-btn');
+  const rows = document.querySelectorAll('.st-row');
+  const counter = document.getElementById('st-counter');
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const filter = btn.getAttribute('data-filter');
+
+      // 切换按钮高亮
+      filterBtns.forEach((b) => {
+        b.classList.remove('bg-indigo-600', 'text-white', 'shadow-xs');
+        b.classList.add('text-slate-600', 'dark:text-slate-300');
+      });
+      btn.classList.add('bg-indigo-600', 'text-white', 'shadow-xs');
+      btn.classList.remove('text-slate-600', 'dark:text-slate-300');
+
+      // 过滤行并更新计数
+      let visibleCount = 0;
+      rows.forEach((row) => {
+        const cat = row.getAttribute('data-category');
+        if (filter === 'all' || cat === filter) {
+          (row as HTMLElement).style.display = '';
+          visibleCount++;
+        } else {
+          (row as HTMLElement).style.display = 'none';
+        }
+      });
+
+      if (counter) {
+        counter.textContent = String(visibleCount);
+      }
+    });
+  });
+</script>

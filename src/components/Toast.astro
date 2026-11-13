@@ -1,0 +1,68 @@
+---
+// Toast.astro - Global Toast component
+---
+
+<div
+  id="global-toast"
+  class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 ease-out flex items-center gap-3 px-5 py-3.5 bg-slate-900/95 dark:bg-white/95 text-white dark:text-slate-900 rounded-xl shadow-2xl backdrop-blur-md border border-slate-700/50 dark:border-slate-200"
+  role="alert"
+>
+  <div class="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 dark:text-emerald-600 flex items-center justify-center shrink-0">
+    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+    </svg>
+  </div>
+  <div>
+    <p id="global-toast-title" class="font-semibold text-sm">已成功复制！</p>
+    <p id="global-toast-desc" class="text-xs text-slate-300 dark:text-slate-600">优惠码已存入剪贴板，前往官网结算时粘贴即可享优惠。</p>
+  </div>
+</div>
+
+<script>
+  let toastTimer: any = null;
+
+  window.showToast = (title = '已成功复制优惠码', desc = '前往官网结算时粘贴即可享受专属折扣！') => {
+    const toast = document.getElementById('global-toast');
+    const titleEl = document.getElementById('global-toast-title');
+    const descEl = document.getElementById('global-toast-desc');
+
+    if (!toast) return;
+
+    if (titleEl) titleEl.textContent = title;
+    if (descEl) descEl.textContent = desc;
+
+    if (toastTimer) clearTimeout(toastTimer);
+
+    toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+    toast.classList.add('translate-y-0', 'opacity-100');
+
+    toastTimer = setTimeout(() => {
+      toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      toast.classList.remove('translate-y-0', 'opacity-100');
+    }, 2800);
+  };
+
+  // 全局一键复制优惠码事件监听（无论在首页、教程页还是悬浮窗，全部即点即生效）
+  document.addEventListener('click', async (e) => {
+    const target = e.target as HTMLElement;
+    const btn = target.closest('.copy-coupon-btn') as HTMLElement;
+    if (!btn) return;
+
+    e.preventDefault();
+    const code = btn.getAttribute('data-coupon');
+    const discount = btn.getAttribute('data-discount') || '专属折上折';
+    const name = btn.getAttribute('data-name') || '该机场';
+
+    if (code) {
+      try {
+        await navigator.clipboard.writeText(code);
+        window.showToast(
+          `已成功复制 ${name} 优惠码：${code}`,
+          `在官网结账时粘贴使用，立享【${discount}】！`
+        );
+      } catch (err) {
+        prompt('请手动复制优惠码：', code);
+      }
+    }
+  });
+</script>

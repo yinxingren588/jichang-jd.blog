@@ -1,0 +1,83 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const tutorials = await getCollection('tutorials');
+tutorials.sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+---
+
+<Layout
+  title="客户端配置教程与节点订阅导入全攻略 - V机场节点推荐"
+  description="汇总 Windows、macOS、iOS 与 Android 全平台客户端配置教程。提供 Mihomo Party、Clash Verge Rev、小火箭 Shadowrocket 从软件下载、订阅链接导入到规则分流与 TUN 模式调优的详细图文指引。"
+  keywords="客户端教程, 订阅配置, 节点导入, 科学上网教程, Mihomo教程, Clash教程, 小火箭配置, TUN模式教程"
+>
+  <div class="py-12 sm:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-xs text-slate-500 mb-6">
+        <a href="/" class="hover:text-indigo-600">首页</a>
+        <span>/</span>
+        <span class="text-slate-800 dark:text-slate-200 font-medium">教程中心</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="max-w-3xl mb-12">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          全套客户端图文教程与深度测评
+        </h1>
+        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-3 leading-relaxed">
+          小白也能轻松掌握的科学上网配置指南。从各系统客户端下载安装、订阅链接一键导入，到 TUN 模式与规则分流优化，手把手带你畅游全球网络。
+        </p>
+      </div>
+
+      <!-- Articles Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        {tutorials.map((post) => {
+          const slug = post.id.replace(/\.(md|mdx)$/, '');
+          return (
+            <article class="bg-white dark:bg-slate-900 rounded-2xl p-6 sm:p-7 border border-slate-200/90 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-indigo-500/40 transition-all flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between gap-2 text-xs text-slate-400 mb-3">
+                  <span class="px-2.5 py-1 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-semibold border border-indigo-200/60 dark:border-indigo-800/60">
+                    {post.data.category}
+                  </span>
+                  <span>{post.data.pubDate}</span>
+                </div>
+
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-3 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                  <a href={`/tutorials/${slug}`}>{post.data.title}</a>
+                </h2>
+
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4 line-clamp-3">
+                  {post.data.description}
+                </p>
+
+                <!-- Tags -->
+                <div class="flex flex-wrap gap-1.5 mb-6">
+                  {post.data.tags.map((tag: string) => (
+                    <span class="text-[11px] text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <span class="text-xs text-slate-400">作者: {post.data.author}</span>
+                <a
+                  href={`/tutorials/${slug}`}
+                  class="inline-flex items-center gap-1 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
+                >
+                  <span>阅读详细指南</span>
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+</Layout>

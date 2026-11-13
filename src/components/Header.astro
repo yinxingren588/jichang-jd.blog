@@ -1,0 +1,193 @@
+---
+// Header.astro
+const currentPath = Astro.url.pathname;
+const isHome = currentPath === '/' || currentPath === '';
+const isRanking = currentPath.startsWith('/ranking') || (currentPath.startsWith('/airports') && !currentPath.includes('invisible-cloud'));
+const isTutorials = currentPath.startsWith('/tutorials') && !currentPath.includes('speedtest');
+const isSpeedtest = currentPath.startsWith('/speedtest') || currentPath.includes('speedtest');
+const isGuide = currentPath.startsWith('/guide');
+const isFaq = currentPath.startsWith('/faq');
+---
+
+<header class="sticky top-0 z-40 w-full backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2.5 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-sky-400 p-0.5 shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
+          <div class="w-full h-full bg-white dark:bg-slate-900 rounded-[10px] flex items-center justify-center">
+            <span class="font-black text-xl bg-gradient-to-br from-indigo-600 to-sky-500 bg-clip-text text-transparent">
+              V
+            </span>
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-slate-900 via-indigo-900 to-indigo-600 dark:from-white dark:via-slate-200 dark:to-indigo-400 bg-clip-text text-transparent">
+            V机场节点推荐
+          </span>
+          <span class="text-[10px] tracking-wider text-slate-500 dark:text-slate-400 font-medium">
+            2026 优质机场节点推荐评测博客
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-1 lg:gap-2">
+        <a
+          href="/"
+          class={`px-2.5 py-1.5 lg:px-3 lg:py-2 rounded-lg text-xs lg:text-sm transition-all ${
+            isHome
+              ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-bold'
+              : 'font-medium text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800/60'
+          }`}
+        >
+          首页精选
+        </a>
+        <a
+          href="/ranking"
+          class={`px-2.5 py-1.5 lg:px-3 lg:py-2 rounded-lg text-xs lg:text-sm transition-all ${
+            isRanking
+              ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-bold'
+              : 'font-medium text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800/60'
+          }`}
+        >
+          机场测评排行
+        </a>
+        <a
+          href="/tutorials"
+          class={`px-2.5 py-1.5 lg:px-3 lg:py-2 rounded-lg text-xs lg:text-sm transition-all ${
+            isTutorials
+              ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-bold'
+              : 'font-medium text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800/60'
+          }`}
+        >
+          全套客户端教程
+        </a>
+        <a
+          href="/speedtest"
+          class={`px-2.5 py-1.5 lg:px-3 lg:py-2 rounded-lg text-xs lg:text-sm transition-all flex items-center gap-1.5 ${
+            isSpeedtest
+              ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-bold'
+              : 'font-medium text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800/60'
+          }`}
+        >
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <span>晚高峰测速</span>
+        </a>
+        <a
+          href="/guide"
+          class={`px-2.5 py-1.5 lg:px-3 lg:py-2 rounded-lg text-xs lg:text-sm transition-all ${
+            isGuide
+              ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-bold'
+              : 'font-medium text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800/60'
+          }`}
+        >
+          选购指南
+        </a>
+        <a
+          href="/faq"
+          class={`px-2.5 py-1.5 lg:px-3 lg:py-2 rounded-lg text-xs lg:text-sm transition-all ${
+            isFaq
+              ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-bold'
+              : 'font-medium text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800/60'
+          }`}
+        >
+          常见问答 FAQ
+        </a>
+      </nav>
+
+      <!-- Right side actions: Dark mode + Quick Aff button -->
+      <div class="flex items-center gap-3">
+        <!-- Dark Mode Toggle Button -->
+        <button
+          id="theme-toggle"
+          type="button"
+          aria-label="切换浅色/暗色主题"
+          class="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+        >
+          <!-- Sun Icon -->
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <!-- Moon Icon -->
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+
+        <a
+          href="/ranking"
+          class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 rounded-xl shadow-sm shadow-indigo-500/25 transition-all"
+        >
+          <span>查看推荐排行</span>
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+
+        <!-- Mobile Menu Hamburger -->
+        <button
+          id="mobile-menu-btn"
+          type="button"
+          aria-label="打开移动端菜单"
+          class="md:hidden p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+        >
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden py-4 border-t border-slate-200/80 dark:border-slate-800/80 space-y-2">
+      <a href="/" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">首页精选</a>
+      <a href="/ranking" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">机场测评排行</a>
+      <a href="/tutorials" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">全套客户端教程</a>
+      <a href="/speedtest" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">晚高峰测速</a>
+      <a href="/guide" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">选购指南</a>
+      <a href="/faq" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">常见问答 FAQ</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Theme toggle functionality
+  const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+  const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+  const themeToggleBtn = document.getElementById('theme-toggle');
+
+  const updateIcons = () => {
+    if (document.documentElement.classList.contains('dark')) {
+      themeToggleLightIcon?.classList.remove('hidden');
+      themeToggleDarkIcon?.classList.add('hidden');
+    } else {
+      themeToggleLightIcon?.classList.add('hidden');
+      themeToggleDarkIcon?.classList.remove('hidden');
+    }
+  };
+
+  updateIcons();
+
+  themeToggleBtn?.addEventListener('click', () => {
+    if (document.documentElement.classList.contains('dark')) {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    }
+    updateIcons();
+  });
+
+  // Mobile menu toggle
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  mobileBtn?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+  });
+</script>

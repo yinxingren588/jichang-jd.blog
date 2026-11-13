@@ -1,0 +1,175 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AirportFilter from '../components/AirportFilter.astro';
+import ClientTutorials from '../components/ClientTutorials.astro';
+import FaqSection from '../components/FaqSection.astro';
+import { getCollection } from 'astro:content';
+
+const tutorials = await getCollection('tutorials');
+const latestPosts = tutorials.slice(0, 3);
+---
+
+<Layout
+  title="节点推荐 | 2026 稳定优质高速机场节点选购评测博客 - V机场节点推荐"
+  description="V机场节点推荐致力于提供专业的节点推荐与网络性能评测。针对外贸办公、ChatGPT/Claude 人工智能交互及 4K 影音流媒体场景，深度实测各主流机场节点的晚高峰稳定性、延迟抖动与解锁能力，帮您挑选不卡顿的高速节点。"
+  keywords="节点推荐, 优质节点推荐, 稳定节点推荐, 机场节点推荐, 高速节点, 科学上网节点, 节点选购, V机场节点推荐"
+>
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden pt-12 pb-16 lg:pt-20 lg:pb-24 border-b border-slate-200/80 dark:border-slate-800/80 bg-gradient-to-b from-indigo-50/50 via-white to-slate-50 dark:from-slate-900/60 dark:via-slate-950 dark:to-slate-950">
+    <!-- Ambient background glow elements -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/15 dark:bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/3 right-10 w-72 h-72 bg-sky-500/10 dark:bg-sky-500/5 rounded-full blur-2xl pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <!-- Top Announcement Pill -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-indigo-100/80 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 shadow-sm mb-6 animate-fade-in">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+        <span>🔥 2026 优质机场节点推荐评测博客 · 深度实测持续更新</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-tight max-w-4xl mx-auto">
+        精选稳定优质
+        <span class="bg-gradient-to-r from-indigo-600 via-sky-500 to-indigo-500 bg-clip-text text-transparent">
+          机场节点推荐
+        </span>
+        与深度评测
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 mt-6 max-w-3xl mx-auto leading-relaxed">
+        客观真实 · 拒绝云测。专注为学术科研、跨境出海办公、AI 生产力（ChatGPT / Claude）及 4K/8K 影音娱乐用户，提供全网主流高可用机场节点横向测评、晚高峰真实跑分与专属折上折优惠码。
+      </p>
+
+      <!-- CTA Action Buttons -->
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href="/ranking"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl font-bold text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 shadow-lg shadow-indigo-600/25 transition-all text-base"
+        >
+          <span>浏览推荐机场榜单</span>
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </a>
+        <a
+          href="/speedtest"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 shadow-sm transition-all text-base"
+        >
+          <span>晚高峰实测天梯榜</span>
+          <svg class="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </a>
+      </div>
+
+      <!-- Trust Badges & Metrics Bar -->
+      <div class="mt-14 pt-10 border-t border-slate-200/80 dark:border-slate-800/80 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto text-left">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shrink-0">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">48h 节点巡检</h4>
+            <p class="text-xs text-slate-500">动态监控剔除失联风险</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shrink-0">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+            </svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">全协议多线路</h4>
+            <p class="text-xs text-slate-500">IEPL/专线/BGP大流量</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 flex items-center justify-center text-amber-600 dark:text-amber-400 shrink-0">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">晚高峰真实测速</h4>
+            <p class="text-xs text-slate-500">千兆真机压测拒绝云跑分</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950/60 flex items-center justify-center text-purple-600 dark:text-purple-400 shrink-0">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">专属折上折</h4>
+            <p class="text-xs text-slate-500">实测可用优惠码一键复制</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Filter & Airport Cards Section -->
+  <AirportFilter />
+
+  <!-- Client Tutorials Showcase Section -->
+  <ClientTutorials />
+
+  <!-- Latest Articles & Speedtest Section -->
+  <section class="py-12 sm:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            最新节点测评与配置干货
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1">持续追踪网络协议动态与节点稳定性变动</p>
+        </div>
+        <a href="/tutorials" class="text-xs sm:text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">
+          查看全部文章 &rarr;
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {latestPosts.map((post) => (
+          <article class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200/90 dark:border-slate-800 hover:shadow-lg transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 text-xs text-slate-400 mb-3">
+                <span class="px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-medium">
+                  {post.data.category}
+                </span>
+                <span>•</span>
+                <span>{post.data.pubDate}</span>
+              </div>
+              <h3 class="font-bold text-lg text-slate-900 dark:text-white mb-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                <a href={`/tutorials/${post.id}`}>{post.data.title}</a>
+              </h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-3 mb-4">
+                {post.data.description}
+              </p>
+            </div>
+            <a
+              href={`/tutorials/${post.id}`}
+              class="inline-flex items-center gap-1 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
+            >
+              <span>阅读全文</span>
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <FaqSection />
+</Layout>

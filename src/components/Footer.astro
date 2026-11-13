@@ -1,0 +1,61 @@
+---
+// Footer.astro
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 transition-colors mt-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
+      <!-- Col 1: About & mission -->
+      <div class="md:col-span-2 space-y-4">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-black text-base">
+            V
+          </div>
+          <span class="font-extrabold text-lg text-slate-900 dark:text-white">V机场节点推荐</span>
+        </div>
+        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-md">
+          致力于为外贸从业者、AI 开发者、跨境电商团队和高校科研人员提供客观、真实的节点测速与科学上网评测服务。杜绝虚假宣传，所有收录机场均经过持续 7 天以上的晚高峰极限压力测试。
+        </p>
+        <div class="flex items-center gap-2 text-xs text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 px-3 py-1.5 rounded-lg w-fit">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>测速数据库每周持续更新（已收录 2026 最新节点）</span>
+        </div>
+      </div>
+
+      <!-- Col 2: Quick Links -->
+      <div class="space-y-3">
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-900 dark:text-white">快捷导航</h3>
+        <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+          <li><a href="/ranking" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">🔥 机场综合排行榜</a></li>
+          <li><a href="/speedtest" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">📊 晚高峰测速横评</a></li>
+          <li><a href="/tutorials" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">📖 客户端全套图文教程</a></li>
+          <li><a href="/guide" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">💡 选购防踩坑指南</a></li>
+          <li><a href="/faq" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">❓ 常见问答 FAQ (全集)</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Client Guides -->
+      <div class="space-y-3">
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-900 dark:text-white">客户端专区</h3>
+        <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+          <li><a href="/tutorials/mihomo-party-tutorial" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Mihomo Party 配置指南</a></li>
+          <li><a href="/tutorials/clash-verge-rev-tutorial" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Clash Verge Rev 教程</a></li>
+          <li><a href="/tutorials/shadowrocket-tutorial" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">iOS 小火箭使用全解</a></li>
+          <li><a href="/disclaimer" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-rose-500">免责声明与合规告示</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Legal Disclaimer Notice -->
+    <div class="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 text-center space-y-3">
+      <div class="max-w-3xl mx-auto p-4 rounded-xl bg-slate-100 dark:bg-slate-800/50 text-xs text-slate-500 dark:text-slate-400 leading-relaxed border border-slate-200 dark:border-slate-800">
+        <strong class="text-slate-700 dark:text-slate-200">免责声明：</strong>
+        本站所有评测内容与教程仅用于学术交流、跨境电商、外贸商务办公以及网络前沿技术研讨。请严格遵守所在国家或地区的相关法律法规，切勿利用代理服务从事任何违法犯罪、破坏国家安全或侵害他人合法权益的活动。
+      </div>
+      <p class="text-xs text-slate-400 dark:text-slate-500">
+        &copy; {currentYear} V机场节点推荐 (jichang-jd.blog). All Rights Reserved. Powered by Astro & Cloudflare Pages.
+      </p>
+    </div>
+  </div>
+</footer>

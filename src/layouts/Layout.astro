@@ -1,0 +1,78 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Toast from '../components/Toast.astro';
+import RightFloatingWidget from '../components/RightFloatingWidget.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  keywords?: string;
+}
+
+const {
+  title = '节点推荐 | 2026 稳定优质高速机场节点选购评测博客 - V机场节点推荐',
+  description = 'V机场节点推荐致力于提供专业的节点推荐与网络性能评测。针对外贸办公、ChatGPT/Claude 人工智能交互及 4K 影音流媒体场景，深度实测各主流机场节点的晚高峰稳定性、延迟抖动与解锁能力，帮您挑选不卡顿的高速节点。',
+  keywords = '节点推荐, 优质节点推荐, 稳定节点推荐, 机场节点推荐, 高速节点, 科学上网节点, 节点选购, V机场节点推荐',
+} = Astro.props;
+
+// 规范化 Canonical URL 与社交分享链接
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site || 'https://jichang-jd.blog').href;
+---
+
+<!doctype html>
+<html lang="zh-CN" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO Meta Tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="V机场节点推荐" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Theme Initialization Script to avoid FOUC -->
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      })();
+
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+  </head>
+  <body class="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 antialiased selection:bg-indigo-500 selection:text-white flex flex-col font-sans transition-colors duration-200">
+    <Header />
+    <main class="flex-grow xl:pr-[255px] transition-all">
+      <slot />
+    </main>
+    <Footer />
+    <RightFloatingWidget />
+    <Toast />
+  </body>
+</html>

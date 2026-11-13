@@ -1,0 +1,73 @@
+---
+// FaqSection.astro - 常见核心高频问答组件（集成权威知识库并引导至独立 FAQ 页面）
+import { faqData } from '../data/faqs';
+
+// 精选首页与关键页面展示的高频核心 6 大关键问答
+const featuredFaqs = faqData.filter((f) => f.featured);
+---
+
+<section id="faq" class="py-12 sm:py-16">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-200/80 dark:border-amber-800 mb-2">
+        <span>💡 官方知识库精选</span>
+      </div>
+      <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        科学上网与机场选购核心常见问题
+      </h2>
+      <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">
+        收录专线原理、ChatGPT 解锁、假断网恢复与防跑路选型等最高频疑惑。
+      </p>
+    </div>
+
+    <div class="space-y-4">
+      {featuredFaqs.map((faq, idx) => (
+        <details class="group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-5 open:shadow-md transition-all">
+          <summary class="flex items-center justify-between font-bold text-slate-900 dark:text-white cursor-pointer list-none text-base sm:text-lg select-none gap-3">
+            <div class="flex items-start gap-2.5">
+              <span class="text-indigo-600 dark:text-indigo-400 font-extrabold shrink-0 mt-0.5">Q{idx + 1}.</span>
+              <div>
+                <span class="leading-snug">{faq.question}</span>
+                {faq.badge && (
+                  <span class="ml-2 text-[11px] font-bold px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200/60 dark:border-indigo-800/60">
+                    {faq.badge}
+                  </span>
+                )}
+              </div>
+            </div>
+            <span class="w-7 h-7 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+          </summary>
+          <div class="mt-3.5 pt-3.5 border-t border-slate-100 dark:border-slate-800 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed pl-7 whitespace-pre-line">
+            <p>{faq.answer}</p>
+            <div class="mt-3 pt-2 text-right">
+              <a
+                href={`/faq/${faq.slug}`}
+                class="inline-flex items-center gap-1 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
+              >
+                <span>阅读该问答完整独立精讲长文</span>
+                <span>&rarr;</span>
+              </a>
+            </div>
+          </div>
+        </details>
+      ))}
+    </div>
+
+    <!-- 查看全部 24 条完整 FAQ 引导通道 -->
+    <div class="mt-8 text-center">
+      <a
+        href="/faq"
+        class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm text-indigo-600 dark:text-indigo-400 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/60 dark:hover:bg-indigo-900/60 border border-indigo-200 dark:border-indigo-800 transition-all shadow-xs group"
+      >
+        <span>查看全部 24 条常见问答与排障全集（进入 FAQ 专区）</span>
+        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,146 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AirportFilter from '../components/AirportFilter.astro';
+---
+
+<Layout
+  title="机场推荐 | 2026 优质稳定翻墙机场天梯排行榜与综合对比"
+  description="精选 2026 稳定机场推荐排行榜，基于晚高峰多地实测数据，横向对比 28 家主流机场的专线质量、月付资费、倍率规则与流媒体解锁能力。为您提供客观中立的机场推荐与选购参考，避开跑路套路盘。"
+  keywords="机场推荐, 机场排行榜, 优质机场推荐, 稳定机场, 机场对比, 专线机场推荐, 翻墙机场排名, 机场选购参考"
+>
+  <div class="py-10 sm:py-16">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-xs text-slate-500 mb-6">
+        <a href="/" class="hover:text-indigo-600">首页</a>
+        <span>/</span>
+        <span class="text-slate-800 dark:text-slate-200 font-medium">机场测评排行</span>
+      </nav>
+
+      <!-- Page Header Banner -->
+      <header class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-900 via-slate-900 to-indigo-950 text-white p-8 sm:p-12 shadow-2xl mb-12 border border-indigo-800/60">
+        <div class="absolute -right-20 -top-20 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute right-1/4 -bottom-20 w-72 h-72 bg-amber-500/15 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-4xl">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30 mb-4">
+            <span>🏆 2026 年度主流机场综合天梯榜</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+            2026 全网主流机场推荐与综合天梯排行榜
+          </h1>
+
+          <p class="text-sm sm:text-base text-slate-300 mt-4 leading-relaxed max-w-3xl">
+            杜绝虚假云测与主观臆测。本站评测实验室依托千兆真实宽带，对收录的全部 28 家主流品牌节点进行了长达 7 天的晚高峰（20:30 - 22:30）极限压力测速。从线路物理架构、实际吞吐跑分、网络抖动丢包、流媒体与海外 AI 解锁能力到真实性价比，全方位梯队分级评定。
+          </p>
+
+          <!-- 4 维评测标准徽章栏 -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 mt-8 pt-8 border-t border-indigo-800/60 text-xs">
+            <div class="p-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <span class="block text-indigo-300 font-bold mb-0.5">线路架构 (权重 35%)</span>
+              <span class="text-slate-200">企业 IEPL / IPLC 纯专线</span>
+            </div>
+            <div class="p-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <span class="block text-indigo-300 font-bold mb-0.5">晚高峰跑分 (权重 30%)</span>
+              <span class="text-slate-200">满载跑满 & 0 丢包抗拥塞</span>
+            </div>
+            <div class="p-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <span class="block text-indigo-300 font-bold mb-0.5">AI / 流媒体 (权重 20%)</span>
+              <span class="text-slate-200">ChatGPT / Claude 4K 秒开</span>
+            </div>
+            <div class="p-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <span class="block text-indigo-300 font-bold mb-0.5">性价比与稳定性 (15%)</span>
+              <span class="text-slate-200">在线率 >99.9% / 合理倍率</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- 梯队分级总览 Tier Cards -->
+      <section class="mb-12">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+          <span>⚡</span>
+          <span>2026 年度机场梯队阵营速览</span>
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <!-- S+ 梯队 -->
+          <div class="rounded-2xl p-5 bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent border-2 border-amber-400/80 dark:border-amber-500/60 flex flex-col justify-between shadow-sm">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="px-2.5 py-1 rounded-md bg-amber-500 text-white font-black text-xs shadow-xs">👑 S+ 旗舰独家主推</span>
+                <span class="text-xs font-bold text-amber-600 dark:text-amber-400">评分 4.9+</span>
+              </div>
+              <h3 class="font-black text-lg text-slate-900 dark:text-white mt-2">隐形人</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
+                全节点企业级 IEPL 纯专线直连，轻量 VLESS 协议栈，抖动低于 3ms，零丢包天花板。
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-amber-200 dark:border-amber-900/60">
+              <a href="/airports/invisible-cloud" class="inline-flex items-center gap-1 text-xs font-black text-amber-700 dark:text-amber-400 hover:underline">
+                <span>查看独家主推详情评测</span>
+                <span>&rarr;</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- S 梯队 -->
+          <div class="rounded-2xl p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col justify-between shadow-xs">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="px-2.5 py-1 rounded-md bg-indigo-600 text-white font-bold text-xs">🌟 S 级 高可用梯队</span>
+                <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">评分 4.8 - 4.9</span>
+              </div>
+              <h3 class="font-bold text-base text-slate-900 dark:text-white mt-2">专线主力旗舰</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                暮光加速、微风网络、飞猫云、飞V、灵动云、宇宙云。IPLC/IEPL 骨干架构，高并发不拥堵。
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-400">
+              适合流媒体高码率与外贸团队
+            </div>
+          </div>
+
+          <!-- A 梯队 -->
+          <div class="rounded-2xl p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col justify-between shadow-xs">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="px-2.5 py-1 rounded-md bg-slate-700 text-white font-bold text-xs">⭐ A 级 均衡品质梯队</span>
+                <span class="text-xs font-bold text-slate-500">评分 4.6 - 4.7</span>
+              </div>
+              <h3 class="font-bold text-base text-slate-900 dark:text-white mt-2">高性价比主流</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                浪网、梯子云、Firefly、闪跃、跨界云、星岛梦、光速云等 13 家。专线/BGP 混合调度。
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-400">
+              兼顾日常大流量与合理价格
+            </div>
+          </div>
+
+          <!-- B 梯队 -->
+          <div class="rounded-2xl p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col justify-between shadow-xs">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="px-2.5 py-1 rounded-md bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs">💡 B 级 平价轻度备用</span>
+                <span class="text-xs font-bold text-slate-400">个位数月付起</span>
+              </div>
+              <h3 class="font-bold text-base text-slate-900 dark:text-white mt-2">学生党与备用</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                光年梯、二猫云、一翻云、边缘节点、可信云、快狸等 8 家。低门槛入门与突发备用。
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-400">
+              超低预算入门推荐
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 28 家机场实时快筛与卡片矩阵 -->
+      <AirportFilter />
+
+    </div>
+  </div>
+</Layout>

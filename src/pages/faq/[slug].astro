@@ -1,0 +1,229 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { faqArticles, type FaqArticle } from '../../data/faqArticles';
+
+export async function getStaticPaths() {
+  return faqArticles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+interface Props {
+  article: FaqArticle;
+}
+
+const { article } = Astro.props;
+
+// 获取同分类或关联推荐的 FAQ 文章
+const relatedArticles = faqArticles
+  .filter((a) => a.slug !== article.slug && (article.relatedSlugs?.includes(a.slug) || a.category === article.category))
+  .slice(0, 3);
+---
+
+<Layout
+  title={article.seoTitle || `${article.title} | 科学上网与机场问答知识库 | V机场节点推荐`}
+  description={article.seoDescription || `${article.summary} 本文深入剖析核心技术原理与实操排障步骤。`}
+  keywords={article.seoKeywords || `${article.tags.join(', ')}, ${article.categoryName}, 科学上网FAQ, 节点排障, V机场节点推荐`}
+>
+  <article class="py-10 sm:py-16 font-sans">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- 1. 面包屑导航 -->
+      <nav class="flex items-center gap-2 text-xs text-slate-500 mb-6 flex-wrap">
+        <a href="/" class="hover:text-indigo-600 transition-colors">首页</a>
+        <span>/</span>
+        <a href="/faq" class="hover:text-indigo-600 transition-colors">常见问答 FAQ</a>
+        <span>/</span>
+        <span class="text-slate-800 dark:text-slate-200 font-bold truncate max-w-xs">{article.categoryName}</span>
+      </nav>
+
+      <!-- 2. 文章头部 -->
+      <header class="mb-10 pb-8 border-b border-slate-200 dark:border-slate-800">
+        <div class="flex items-center gap-2 text-xs text-slate-400 mb-4 flex-wrap">
+          <span class="px-2.5 py-1 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-bold border border-indigo-200/60 dark:border-indigo-800/60">
+            {article.categoryName}
+          </span>
+          {article.badge && (
+            <span class="px-2.5 py-1 rounded-md bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 font-bold border border-amber-200/80 dark:border-amber-800/80">
+              {article.badge}
+            </span>
+          )}
+          <span>发布：{article.pubDate}</span>
+          <span>•</span>
+          <span>{article.readTime}</span>
+          <span>•</span>
+          <span>作者：{article.author}</span>
+        </div>
+
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-snug">
+          {article.title}
+        </h1>
+
+        <!-- 核心摘要 Callout -->
+        <div class="mt-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-indigo-50/80 via-slate-50 to-indigo-50/50 dark:from-slate-900/90 dark:via-slate-900 dark:to-indigo-950/40 border-2 border-indigo-200/70 dark:border-indigo-900/60 text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-relaxed shadow-xs">
+          <div class="flex items-center gap-2 font-black text-indigo-700 dark:text-indigo-300 mb-1.5 text-xs sm:text-sm">
+            <span>💡</span>
+            <span>官方核心导读与结论</span>
+          </div>
+          <p>{article.summary}</p>
+        </div>
+      </header>
+
+      <!-- 3. 文章核心主体内容 (精修结构化章节) -->
+      <div class="space-y-10 text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
+        {article.sections.map((section, sIdx) => (
+          <section class="space-y-4">
+            <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2.5 pt-2">
+              <span class="w-2 h-6 rounded-full bg-indigo-600 dark:bg-indigo-500"></span>
+              <span>{section.title}</span>
+            </h2>
+
+            {section.paragraphs.map((p) => (
+              <p class="leading-relaxed whitespace-pre-line text-slate-600 dark:text-slate-300">
+                {p}
+              </p>
+            ))}
+
+            <!-- 结构化对比表格 (若有) -->
+            {section.table && (
+              <div class="overflow-x-auto my-6 rounded-2xl border-2 border-slate-200 dark:border-slate-800 shadow-sm">
+                <table class="w-full text-left text-xs sm:text-sm border-collapse min-w-[600px]">
+                  <thead class="bg-gradient-to-r from-indigo-50 via-slate-100 to-indigo-50/60 dark:from-slate-800 dark:to-slate-800 text-slate-800 dark:text-slate-100 font-extrabold border-b-2 border-slate-200 dark:border-slate-700">
+                    <tr>
+                      {section.table.headers.map((h) => (
+                        <th class="py-3.5 px-4">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100 dark:divide-slate-800 bg-white dark:bg-slate-900">
+                    {section.table.rows.map((row) => (
+                      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+                        {row.map((cell, cIdx) => (
+                          <td class={`py-3.5 px-4 ${cIdx === 0 ? 'font-black text-slate-900 dark:text-white' : ''}`}>
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            <!-- 专栏小贴士与避坑建议 (若有) -->
+            {section.tips && section.tips.map((tip) => (
+              <div class="p-4 rounded-xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-300/80 dark:border-amber-800/80 text-xs sm:text-sm text-amber-900 dark:text-amber-200 leading-relaxed flex items-start gap-2.5 shadow-2xs my-4">
+                <span class="text-amber-500 text-base shrink-0">⚠️</span>
+                <div>{tip}</div>
+              </div>
+            ))}
+          </section>
+        ))}
+
+        <!-- 标签云 -->
+        <div class="pt-6 border-t border-slate-200 dark:border-slate-800 flex items-center gap-2 flex-wrap text-xs">
+          <span class="text-slate-400 font-bold">主题标签：</span>
+          {article.tags.map((tag) => (
+            <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <!-- 4. 本站独家推荐第一品牌转换卡片 -->
+      <section class="mt-14 p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white shadow-xl border-2 border-amber-500/30 relative overflow-hidden">
+        <div class="absolute right-0 top-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded bg-amber-500 text-white text-xs font-black">👑 本站独家主推第一名</span>
+              <span class="text-xs text-amber-300 font-bold">企业级 IEPL 纯专线</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-black text-white">
+              隐形人 · 端到端纯内网专线直连
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-300 max-w-lg leading-relaxed">
+              彻底摆脱公网防火墙 QoS 限速，晚高峰跨境骨干零拥堵，网络抖动低于 3ms，商业住宅原生 IP 完美解锁 ChatGPT 与 4K 全流媒体。
+            </p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0">
+            <a
+              href="/airports/invisible-cloud"
+              class="w-full sm:w-auto px-5 py-2.5 rounded-xl font-black text-xs sm:text-sm bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-md shadow-amber-500/25 transition-all text-center"
+            >
+              👑 查看隐形人独立评测
+            </a>
+            <a
+              href="https://varnexa.invisibleaff.com/#/?code=JF4seZUy"
+              target="_blank"
+              rel="noopener noreferrer nofollow sponsored"
+              class="w-full sm:w-auto px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all text-center"
+            >
+              直达官网开通
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. 同类高频关联问答推荐 -->
+      {relatedArticles.length > 0 && (
+        <section class="mt-14 pt-10 border-t border-slate-200 dark:border-slate-800">
+          <h3 class="text-lg sm:text-xl font-black text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+            <span>📚</span>
+            <span>相关高频问答精选</span>
+          </h3>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {relatedArticles.map((rel) => (
+              <a
+                href={`/faq/${rel.slug}`}
+                class="group p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 hover:shadow-md transition-all flex flex-col justify-between"
+              >
+                <div>
+                  <span class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 block mb-1">
+                    {rel.categoryName}
+                  </span>
+                  <h4 class="font-bold text-sm text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-2">
+                    {rel.title}
+                  </h4>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+                    {rel.summary}
+                  </p>
+                </div>
+                <div class="mt-3 pt-2 text-[11px] font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                  <span>查看详细长文</span>
+                  <span>&rarr;</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- 6. 底部返回导航 -->
+      <div class="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between flex-wrap gap-4 text-xs sm:text-sm">
+        <a
+          href="/faq"
+          class="inline-flex items-center gap-1.5 font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
+        >
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          <span>返回全部 24 条常见问答 FAQ</span>
+        </a>
+
+        <a
+          href="/ranking"
+          class="font-bold text-slate-700 dark:text-slate-300 hover:text-indigo-600 transition-colors"
+        >
+          查看全部 28 家机场综合天梯榜 &rarr;
+        </a>
+      </div>
+
+    </div>
+  </article>
+</Layout>
